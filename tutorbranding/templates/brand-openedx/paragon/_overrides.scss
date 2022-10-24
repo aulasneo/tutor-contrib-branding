@@ -1,0 +1,15 @@
+// Use this file to define style overrides for @edx/paragon
+// This file is included after all Paragon styles, but should generally avoid using private mixins in Paragon.
+
+//Learning//
+
+//----------------------------- Course Home ----------------------------------//
+body{
+    background-color: {{ BRANDING_BODY }};
+}
+
+.bg-primary {
+    background: {{ BRANDING_BG_PRIMARY }};
+}
+
+{{ BRANDING_OVERRIDES }}

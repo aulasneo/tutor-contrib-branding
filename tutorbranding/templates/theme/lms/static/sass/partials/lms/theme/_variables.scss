@@ -1,0 +1,33 @@
+$static-path: '..' !default;
+
+// Add an image as banner
+// $homepage-bg-image: url('#{$static-path}/images/banner.jpg');
+
+$primary : {{ BRANDING_PRIMARY }};
+$secondary: {{ BRANDING_SECONDARY }};
+
+$brand: {{ BRANDING_BRAND }};
+$success: {{ BRANDING_SUCCESS }};
+$info: {{ BRANDING_INFO }};
+$danger: {{ BRANDING_DANGER }};
+$warning: {{ BRANDING_WARNING }};
+$light: {{ BRANDING_LIGHT }};
+$dark: {{ BRANDING_DARK }};
+$accent-a: {{ BRANDING_ACCENT_A }};
+$accent-b: {{ BRANDING_ACCENT_B }};
+
+{% if BRANDING_FONT_FAMILY != "" %}
+$font-family-sans-serif: {{ BRANDING_FONT_FAMILY }} !default;
+$font-family-title: {{ BRANDING_FONT_FAMILY }};
+
+$monospace: {{ BRANDING_FONT_FAMILY }} !default;
+$serif: {{ BRANDING_FONT_FAMILY }} !default;
+
+// newer variables/standards
+$f-serif: {{ BRANDING_FONT_FAMILY }} !default;
+$f-monospace: {{ BRANDING_FONT_FAMILY }} !default;
+{% endif %}
+
+// Initialize the Open edX Bootstrap theme
+@import 'edx-bootstrap/sass/open-edx/theme';
+

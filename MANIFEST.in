@@ -1,0 +1,2 @@
+recursive-include tutorbranding/patches *
+recursive-include tutorbranding/templates *
