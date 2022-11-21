@@ -41,6 +41,7 @@ config = {
         "DARK": "#273F2F",
         "ACCENT_A": "#00BBF9",
         "ACCENT_B": "#FFEE88",
+        "HOMEPAGE_BG_IMAGE": "",
         # EXTRAS: additional CSS for html theme
         "EXTRAS": "",
         # OVERRIDES: additional CSS for mfe branding

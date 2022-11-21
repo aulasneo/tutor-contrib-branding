@@ -35,6 +35,7 @@ These are the available variables and their defaults:
 * BRANDING_BACKGROUND: #ffffff
 * BRANDING_BG_PRIMARY: #ffffff
 * BRANDING_BODY: #FFFFFF
+* BRANDING_HOMEPAGE_BG_IMAGE: ""
 
 You can add these settings to the ``config.yml`` file or using the
 ``tutor config --set "<setting>=<value>"`` command.
@@ -75,6 +76,9 @@ Then put your font files in the ``env/build/openedx/themes/theme/lms/static/font
 
 *Note*: Currently this plugin does not support uploading logos, images, fonts or static pages.
 To do so, you will have to add them manually to the corresponding location under the ``env`` directory.
+
+To set a home page banner image, upload it to ``env/build/openedx/themes/theme/lms/static/images``
+directory and set BRANDING_HOMEPAGE_BG_IMAGE to its file name.
 
 Usage
 -----
