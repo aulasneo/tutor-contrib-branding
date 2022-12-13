@@ -1,8 +1,16 @@
+import json
 from glob import glob
 import os
 import pkg_resources
+import click
+import requests
+import zipfile
+import shutil
 
-from tutor import hooks
+from urllib.error import HTTPError
+
+from tutor import config as tutor_config
+from tutor import hooks, fmt
 
 from .__about__ import __version__
 
@@ -53,6 +61,7 @@ config = {
 }
 
 
+
 hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"BRANDING_{key}", value) for key, value in config["defaults"].items()]
 )
@@ -91,6 +100,94 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 # Force the rendering of scss files, even though they are included in a "partials" directory
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms/theme/")
 
+########################################
+# Commands
+########################################
+
+@click.group(help="Branding tools", name='branding')
+@click.pass_obj
+def branding_command(context):
+    pass
+
+def _download_file(url: str, dest_dir: str, filename: str):
+
+    # Check if destination directory exists, or create it
+    if not os.path.exists(dest_dir):
+        fmt.echo_info(f"Creating {dest_dir}")
+        os.mkdir(dest_dir)
+
+    fmt.echo_info(f"Downloading {filename} from {url} to {dest_dir}")
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        open(os.path.join(dest_dir, filename), "wb").write(response.content)
+
+    except HTTPError as http_err:
+        fmt.echo_error(f'HTTP error occurred downloading {filename}: {http_err}')
+    except Exception as err:
+        fmt.echo_error(f'Error downloading {filename}: {err}')
+
+
+@click.command(help="Download image from url")
+@click.pass_obj
+def download_images(context):
+    fmt.echo_info("*** Downloading images ***")
+    config = tutor_config.load(context.root)
+
+    # Download LMS images
+    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'images')
+
+    if "BRANDING_LMS_IMAGES" in config:
+        for image in config['BRANDING_LMS_IMAGES']:
+            _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
+    else:
+        fmt.echo_alert("No BRANDING_LMS_IMAGES configured")
+
+    # Download CMS images
+    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'cms', 'static', 'images')
+
+    if "BRANDING_CMS_IMAGES" in config:
+        for image in config['BRANDING_CMS_IMAGES']:
+            _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
+    else:
+        fmt.echo_alert("No BRANDING_CMS_IMAGES configured")
+
+
+@click.command(help="Download and unzip font from url")
+@click.pass_obj
+def download_fonts(context):
+    fmt.echo_info("*** Downloading fonts ***")
+    config = tutor_config.load(context.root)
+
+    # Download fonts
+    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'fonts')
+    dest_dir_mfe = os.path.join(context.root, 'env', 'plugins', 'mfe', 'build', 'mfe', 'brand-openedx', 'fonts')
+
+    if "BRANDING_FONTS_URLS" in config:
+        for font_url in config['BRANDING_FONTS_URLS']:
+            filename = 'font.zip'
+            _download_file(url=font_url, dest_dir=dest_dir, filename=filename)
+
+            # Unzip the file
+            with zipfile.ZipFile(os.path.join(dest_dir, filename), 'r') as zip:
+                zip.extractall(dest_dir)
+                if 'mfe' in config.get('PLUGINS'):
+                    zip.extractall(dest_dir_mfe)
+                zip.printdir()
+
+                os.remove(os.path.join(dest_dir, filename))
+
+    else:
+        fmt.echo_alert("No BRANDING_FONTS_URLS configured")
+
+
+branding_command.add_command(download_images)
+branding_command.add_command(download_fonts)
+
+
+hooks.Filters.CLI_COMMANDS.add_item(branding_command)
 
 ########################################
 # PATCH LOADING
