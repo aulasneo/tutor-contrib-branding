@@ -114,7 +114,7 @@ def _download_file(url: str, dest_dir: str, filename: str):
     # Check if destination directory exists, or create it
     if not os.path.exists(dest_dir):
         fmt.echo_info(f"Creating {dest_dir}")
-        os.mkdir(dest_dir)
+        os.mkdirs(dest_dir)
 
     fmt.echo_info(f"Downloading {filename} from {url} to {dest_dir}")
 
