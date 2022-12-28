@@ -1,4 +1,4 @@
-# Unreleased
+# Version 0.3.0 (2022-12-28)
 - Allow non-authenticated header to hide links by setting '#' to the urls.
 # Version 0.2.0
 - Download fonts and images from URL
