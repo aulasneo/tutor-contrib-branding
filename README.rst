@@ -141,6 +141,17 @@ Then run
 
     tutor branding download-images
 
+Custom HTML block in home page
+------------------------------
+
+You can add a custom HTML code to be rendered in the home page after the banner
+and before the list of courses by setting ``BRANDING_INDEX_ADDITIONAL_HTML``.
+
+Customize HTML certificate
+--------------------------
+
+By setting ``BRANDING_CERTIFICATE_HTML`` you can override the standard certificate with
+your own HTML code.
 
 Usage
 -----
