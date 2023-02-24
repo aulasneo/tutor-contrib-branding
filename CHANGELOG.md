@@ -1,4 +1,4 @@
-# Unreleased
+# Version 0.5.0 (2023-02-24)
 - Add customizable static pages (about, contact us, 404, etc.)
 
 # Version 0.4.0 (2022-12-30)
