@@ -1,3 +1,6 @@
+# Unreleased
+- Add customizable static pages (about, contact us, 404, etc.)
+
 # Version 0.4.0 (2022-12-30)
 - Add BRANDING_CERTIFICATE_HTML setting to customize certificates
 - Add BRANDING_INDEX_ADDITIONAL_HTML setting to add a custom HTML code to the home page
