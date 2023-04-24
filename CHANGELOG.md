@@ -1,4 +1,4 @@
-# Unreleased
+# Version 0.5.1 (2023-04-24)
 - Fix error downloading images
 
 # Version 0.5.0 (2023-02-24)
