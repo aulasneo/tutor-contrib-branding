@@ -5,7 +5,7 @@ import pkg_resources
 import click
 import requests
 import zipfile
-import shutil
+from pathlib import Path
 
 from urllib.error import HTTPError
 
@@ -13,7 +13,6 @@ from tutor import config as tutor_config
 from tutor import hooks, fmt
 
 from .__about__ import __version__
-
 
 ########################################
 # CONFIGURATION
@@ -82,8 +81,6 @@ config = {
     "overrides": {},
 }
 
-
-
 hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"BRANDING_{key}", value) for key, value in config["defaults"].items()]
 )
@@ -122,6 +119,7 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 # Force the rendering of scss files, even though they are included in a "partials" directory
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms/theme/")
 
+
 ########################################
 # Commands
 ########################################
@@ -131,13 +129,8 @@ hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms
 def branding_command(context):
     pass
 
+
 def _download_file(url: str, dest_dir: str, filename: str):
-
-    # Check if destination directory exists, or create it
-    if not os.path.exists(dest_dir):
-        fmt.echo_info(f"Creating {dest_dir}")
-        os.makedirs(dest_dir)
-
     fmt.echo_info(f"Downloading {filename} from {url} to {dest_dir}")
 
     try:
@@ -163,6 +156,7 @@ def download_images(context):
 
     if "BRANDING_LMS_IMAGES" in config:
         for image in config['BRANDING_LMS_IMAGES']:
+            Path(dest_dir).mkdir(parents=True, exist_ok=True)
             _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
     else:
         fmt.echo_alert("No BRANDING_LMS_IMAGES configured")
@@ -171,6 +165,7 @@ def download_images(context):
     dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'cms', 'static', 'images')
 
     if "BRANDING_CMS_IMAGES" in config:
+        Path(dest_dir).mkdir(parents=True, exist_ok=True)
         for image in config['BRANDING_CMS_IMAGES']:
             _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
     else:
@@ -208,7 +203,6 @@ def download_fonts(context):
 branding_command.add_command(download_images)
 branding_command.add_command(download_fonts)
 
-
 hooks.Filters.CLI_COMMANDS.add_item(branding_command)
 
 ########################################
@@ -220,10 +214,10 @@ hooks.Filters.CLI_COMMANDS.add_item(branding_command)
 # For each file in tutorbranding/patches,
 # apply a patch based on the file's name and contents.
 for path in glob(
-    os.path.join(
-        pkg_resources.resource_filename("tutorbranding", "patches"),
-        "*",
-    )
+        os.path.join(
+            pkg_resources.resource_filename("tutorbranding", "patches"),
+            "*",
+        )
 ):
     with open(path, encoding="utf-8") as patch_file:
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))

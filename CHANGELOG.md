@@ -1,3 +1,6 @@
+# Unreleased
+- Fix error downloading images
+
 # Version 0.5.0 (2023-02-24)
 - Add customizable static pages (about, contact us, 404, etc.)
 
