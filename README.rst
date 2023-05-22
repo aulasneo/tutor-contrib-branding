@@ -156,6 +156,14 @@ Customize HTML certificate
 By setting ``BRANDING_CERTIFICATE_HTML`` you can override the standard certificate with
 your own HTML code.
 
+Tip: Create a file with the HTML code (e.g., ``branding_certificate_html.html``)
+and then update the configuration from the file.
+
+::
+
+    tutor config save --set BRANDING_CERTIFICATE_HTML="$(cat branding_certificate_html.html)"
+
+
 Customizing static pages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
