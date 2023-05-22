@@ -1,3 +1,6 @@
+# Unreleased
+- Fix "Register" button text
+
 # Version 0.5.1 (2023-04-24)
 - Fix error downloading images
 
