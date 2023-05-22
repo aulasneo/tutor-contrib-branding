@@ -1,4 +1,4 @@
-# Unreleased
+# Version 0.5.2 (2023-05-22)
 - Fix "Register" button text
 
 # Version 0.5.1 (2023-04-24)
