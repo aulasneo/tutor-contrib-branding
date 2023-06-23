@@ -1,4 +1,4 @@
-# Unreleased
+# Version 0.5.3 (2023-06-23)
 - Fix: create fonts directory if not exists
 
 # Version 0.5.2 (2023-05-22)
