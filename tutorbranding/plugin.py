@@ -185,6 +185,7 @@ def download_fonts(context):
     if "BRANDING_FONTS_URLS" in config:
         for font_url in config['BRANDING_FONTS_URLS']:
             filename = 'font.zip'
+            Path(dest_dir).mkdir(parents=True, exist_ok=True)
             _download_file(url=font_url, dest_dir=dest_dir, filename=filename)
 
             # Unzip the file

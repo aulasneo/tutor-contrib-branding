@@ -1,3 +1,6 @@
+# Unreleased
+- Fix: create fonts directory if not exists
+
 # Version 0.5.2 (2023-05-22)
 - Fix "Register" button text
 
