@@ -191,6 +191,16 @@ variable:
 - BRANDING_STATIC_TEMPLATE_SITEMAP
 - BRANDING_STATIC_TEMPLATE_TOS
 
+Customizing MFE header and footer
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use a custom header or footer, clone `frontend-component-header <https://github.com/openedx/frontend-component-header>`_
+and/or `frontend-component-footer <https://github.com/openedx/frontend-component-footer>`_,
+push to your custom repository and set the repository URL in the variables:
+
+- BRANDING_FRONTEND_COMPONENT_HEADER_REPO
+- BRANDING_FRONTEND_COMPONENT_FOOTER_REPO
+
 Usage
 -----
 

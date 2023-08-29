@@ -1,5 +1,7 @@
 # Change log
 
+## Unreleased
+- Add support for custom frontend component header and footer
 
 ## Version 14.0.0 (2023-08-29)
 - Align versioning convention with Tutor. Upload to PyPI 
