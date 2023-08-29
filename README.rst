@@ -12,7 +12,7 @@ Installation
 
 ::
 
-    pip install git+https://github.com/aulasneo/tutor-contrib-branding
+    pip install tutor-contrib-branding
 
 Configuration
 -------------

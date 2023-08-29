@@ -33,13 +33,14 @@ setup(
         "Issue tracker": "https://github.com/aulasneo/tutor-contrib-branding/issues",
     },
     license="AGPLv3",
-    author="Andrés González",
-    description="Branding plugin for Tutor",
+    author="Aulasneo",
+    author_email="andres@aulasneo.com",
+    description="Tutor plugin that simplifies branding an Open edX instance",
     long_description=load_readme(),
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     python_requires=">=3.7",
-    install_requires=["tutor"],
+    install_requires=["tutor ~= 14.0.0"],
     entry_points={
         "tutor.plugin.v1": [
             "branding = tutorbranding.plugin"
