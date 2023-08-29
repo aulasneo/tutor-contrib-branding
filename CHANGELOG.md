@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 14.1.0 (2023-08-29)
 - Add support for custom frontend component header and footer
 
 ## Version 14.0.0 (2023-08-29)
