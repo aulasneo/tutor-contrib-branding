@@ -192,7 +192,7 @@ variable:
 - BRANDING_STATIC_TEMPLATE_TOS
 
 Customizing MFE header and footer
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use a custom header or footer, clone `frontend-component-header <https://github.com/openedx/frontend-component-header>`_
 and/or `frontend-component-footer <https://github.com/openedx/frontend-component-footer>`_,
