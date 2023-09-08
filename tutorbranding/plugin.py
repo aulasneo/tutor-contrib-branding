@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 
 from tutor import config as tutor_config
-from tutor import hooks, fmt
+from tutor import hooks, fmt, env
 
 from .__about__ import __version__
 
@@ -92,6 +92,21 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config["overrides"].items())
 )
+
+################# Initialization tasks
+# To run the script from templates/panorama/tasks/myservice/init, add:
+with open(
+        pkg_resources.resource_filename(
+            "tutorbranding", os.path.join("templates", "tasks", "lms", "init")
+        ),
+        encoding="utf8",
+) as f:
+    hooks.Filters.CLI_DO_INIT_TASKS.add_item(
+        (
+            "lms",
+            f.read()
+        )
+    )
 
 ########################################
 # TEMPLATE RENDERING
