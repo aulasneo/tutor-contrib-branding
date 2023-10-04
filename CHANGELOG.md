@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 15.1.0 (2023-10-04)
 - Support Olive release
 
 ## Version 14.1.0 (2023-08-29)
