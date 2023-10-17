@@ -10,6 +10,6 @@ RUN npm install '@edx/frontend-component-header@{{ BRANDING_FRONTEND_COMPONENT_H
 
 {% if BRANDING_FRONTEND_COMPONENT_FOOTER_REPO is defined %}
 # Install the frontend component footer
-RUN npm install '@edx/frontend-component-header@{{ BRANDING_FRONTEND_COMPONENT_FOOTER_REPO }}'
+RUN npm install '@edx/frontend-component-footer@{{ BRANDING_FRONTEND_COMPONENT_FOOTER_REPO }}'
 {% endif %}
 

@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix bug in dockerfile to import footer
+
 ## Version 14.1.0 (2023-08-29)
 - Add support for custom frontend component header and footer
 
