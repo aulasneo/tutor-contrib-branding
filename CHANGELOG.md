@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix bug in dockerfile to import footer
+
 ## Version 15.1.0 (2023-10-04)
 - Support Olive release
 
