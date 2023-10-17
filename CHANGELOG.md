@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 15.1.1 (2023-10-17)
 - Fix bug in dockerfile to import footer
 
 ## Version 15.1.0 (2023-10-04)
