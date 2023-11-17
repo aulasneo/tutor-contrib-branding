@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 16.0.0 (2023-11-17)
 - Upgrade to Palm
 - 
 ## Version 15.1.1 (2023-10-17)
