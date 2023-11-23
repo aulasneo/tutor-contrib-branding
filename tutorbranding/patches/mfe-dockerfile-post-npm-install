@@ -5,11 +5,11 @@ RUN npm install '@edx/brand@file:/openedx/brand-openedx'
 
 {% if BRANDING_FRONTEND_COMPONENT_HEADER_REPO is defined %}
 # Install the frontend component header
-RUN npm install '@edx/frontend-component-header@{{ BRANDING_FRONTEND_COMPONENT_HEADER_REPO }}'
+RUN if grep -q -e '"name": "@edx/frontend-app-authn"' -e '"name": "@edx/frontend-app-gradebook"' -e '"name": "@edx/frontend-app-course-authoring"' package.json; then echo "Skipping..."; else npm install '@edx/frontend-component-header@{{ BRANDING_FRONTEND_COMPONENT_HEADER_REPO }}'; fi
 {% endif %}
 
 {% if BRANDING_FRONTEND_COMPONENT_FOOTER_REPO is defined %}
 # Install the frontend component footer
-RUN npm install '@edx/frontend-component-footer@{{ BRANDING_FRONTEND_COMPONENT_FOOTER_REPO }}'
+RUN if grep -q -e '"name": "@edx/frontend-app-authn"' -e '"name": "@edx/frontend-app-gradebook"' -e '"name": "@edx/frontend-app-course-authoring"' package.json; then echo "Skipping..."; else npm install '@edx/frontend-component-header@{{ BRANDING_FRONTEND_COMPONENT_FOOTER_REPO }}'; fi
 {% endif %}
 
