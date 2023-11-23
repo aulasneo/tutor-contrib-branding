@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 15.2.0 (2023-11-23)
 - Skip installing component header and footer in MFEs that don't include them
 
 ## Version 15.1.1 (2023-10-17)
