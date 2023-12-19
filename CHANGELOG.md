@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix Tutor dependency in Nutmeg
+
 ## Version 14.1.1 (2023-10-17)
 - Fix bug in dockerfile to import footer
 
