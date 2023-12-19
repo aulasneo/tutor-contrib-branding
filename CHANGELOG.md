@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 14.2.0 (2023-12-19)
 - Fix Tutor dependency in Nutmeg
 
 ## Version 14.1.1 (2023-10-17)
