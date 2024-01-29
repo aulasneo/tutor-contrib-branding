@@ -1,5 +1,8 @@
 # Change log
 
+## Version 17.0.0 (2024-01-28)
+- Upgrade to Quince
+
 ## Version 16.0.0 (2023-11-17)
 - Upgrade to Palm
 - 
