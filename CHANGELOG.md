@@ -1,8 +1,11 @@
 # Change log
 
+## Unreleased
+- fix: Use urllib3==1.26.6 to avoid issues with Open SSL version
+
 ## Version 16.0.0 (2023-11-17)
 - Upgrade to Palm
-- 
+
 ## Version 15.1.1 (2023-10-17)
 - Fix bug in dockerfile to import footer
 
