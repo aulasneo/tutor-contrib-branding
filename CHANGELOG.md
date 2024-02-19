@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 16.0.1 (2024-02-19)
 - fix: Use urllib3==1.26.6 to avoid issues with Open SSL version
 
 ## Version 16.0.0 (2023-11-17)
