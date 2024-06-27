@@ -191,6 +191,26 @@ variable:
 - BRANDING_STATIC_TEMPLATE_SITEMAP
 - BRANDING_STATIC_TEMPLATE_TOS
 
+Use custom MFEs
+~~~~~~~~~~~~~~~
+
+You can create alternate versions of existing MFEs or new ones.
+Starting from Palm, Tutor will not accept MFE repo overrides in the configuration file.
+This plugin brings back that functionality, allowing you to specify the repo, port and
+version of the MFEs to override in the configuration file without the need to create
+a plugin just for this.
+
+To override the MFE repo information, set the `BRANDING_MFE` variable as in this example:
+
+::
+
+    BRANDING_MFE:
+      authn:
+        port: 2001
+        repository: https://github.com/myorg/myfork
+        version: mybranch
+
+
 Customizing MFE header and footer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

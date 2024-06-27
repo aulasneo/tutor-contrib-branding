@@ -6,6 +6,8 @@ import click
 import requests
 import zipfile
 from pathlib import Path
+from tutormfe.hooks import MFE_APPS
+from tutor import config as tutor_config
 
 from urllib.error import HTTPError
 
@@ -54,6 +56,7 @@ config = {
         # OVERRIDES: additional CSS for mfe branding
         "OVERRIDES": "",
         "FONTS": "",
+        "MFE": {},
 
         # static page templates
         "STATIC_TEMPLATE_404": None,
@@ -133,6 +136,19 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 
 # Force the rendering of scss files, even though they are included in a "partials" directory
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms/theme/")
+
+# MFEs
+@MFE_APPS.add()
+def _add_my_mfe(mfes):
+
+    config = tutor_config.load('')
+    print(config['BRANDING_MFE'])
+
+    for mfe_name, mfe_info in config['BRANDING_MFE'].items():
+        mfes[mfe_name] = mfe_info
+
+    return mfes
+
 
 
 ########################################

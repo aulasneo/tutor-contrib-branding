@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: add BRANDING_MFE setting to customize mfe repo, port and version
+
 ## Version 16.0.1 (2024-02-19)
 - fix: Use urllib3==1.26.6 to avoid issues with Open SSL version
 
