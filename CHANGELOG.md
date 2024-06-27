@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 16.1.1 (2024-06-27)
 
 - fix: Fix bug
 
