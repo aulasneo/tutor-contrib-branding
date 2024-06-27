@@ -141,10 +141,9 @@ hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms
 @MFE_APPS.add()
 def _add_my_mfe(mfes):
 
-    config = tutor_config.load('')
-    print(config['BRANDING_MFE'])
+    configuration = tutor_config.load('')
 
-    for mfe_name, mfe_info in config['BRANDING_MFE'].items():
+    for mfe_name, mfe_info in configuration['BRANDING_MFE'].items():
         mfes[mfe_name] = mfe_info
 
     return mfes
