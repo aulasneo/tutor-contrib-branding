@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 16.1.0 (2024-06-27)
 - feat: add BRANDING_MFE setting to customize mfe repo, port and version
 
 ## Version 16.0.1 (2024-02-19)
