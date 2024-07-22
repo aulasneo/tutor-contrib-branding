@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- fix: Make BRANDING_CERTIFICATE_HTML override all _accomplishment-rendering.html
+
 ## Version 15.2.0 (2023-11-23)
 - Skip installing component header and footer in MFEs that don't include them
 
