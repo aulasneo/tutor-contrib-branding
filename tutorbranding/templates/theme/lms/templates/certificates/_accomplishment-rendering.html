@@ -1,3 +1,6 @@
+{% if BRANDING_CERTIFICATE_HTML is defined %}
+{{ BRANDING_CERTIFICATE_HTML }}
+{% else %}
 <%page expression_filter="h"/>
 <%! from django.utils.translation import gettext as _ %>
 <%namespace name='static' file='../static_content.html'/>
@@ -6,9 +9,6 @@ course_mode_class = course_mode if course_mode else ''
 %>
 
 <main class="accomplishment accomplishment-main">
-{% if BRANDING_CERTIFICATE_HTML is defined %}
-{{ BRANDING_CERTIFICATE_HTML }}
-{% else %}
     <div class="wrapper-accomplishment-rendering">
         <div class="accomplishment-rendering">
             <span class="deco-corner deco-corner-tl"></span>
