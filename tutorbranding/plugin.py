@@ -1,25 +1,24 @@
-import json
+"""
+Tutor plugin to brand your Open edX instance.
+"""
 from glob import glob
 import os
-import pkg_resources
-import click
-import requests
 import zipfile
 from pathlib import Path
-from tutormfe.hooks import MFE_APPS
-from tutor import config as tutor_config
-
 from urllib.error import HTTPError
 
+import importlib_resources
+import click
+import requests
+from tutormfe.hooks import MFE_APPS
+
+
 from tutor import config as tutor_config
-from tutor import hooks, fmt, env
+from tutor import hooks, fmt
 
 from .__about__ import __version__
 
-########################################
-# CONFIGURATION
-########################################
-
+# Configuration
 config = {
     # Add here your new settings
     "defaults": {
@@ -96,38 +95,20 @@ hooks.Filters.CONFIG_OVERRIDES.add_items(
     list(config["overrides"].items())
 )
 
-################# Initialization tasks
+# Initialization tasks
 # To run the script from templates/panorama/tasks/myservice/init, add:
 with open(
-        pkg_resources.resource_filename(
-            "tutorbranding", os.path.join("templates", "tasks", "lms", "init")
-        ),
-        encoding="utf8",
-) as f:
-    hooks.Filters.CLI_DO_INIT_TASKS.add_item(
-        (
-            "lms",
-            f.read()
-        )
-    )
+        str(importlib_resources.files("tutorbranding") / "templates" / "tasks" / "lms" / "init"),
+        encoding="utf-8",
+) as task_file:
+    hooks.Filters.CLI_DO_INIT_TASKS.add_item(("lms", task_file.read()))
 
-########################################
-# TEMPLATE RENDERING
-# (It is safe & recommended to leave
-#  this section as-is :)
-########################################
-
-hooks.Filters.ENV_TEMPLATE_ROOTS.add_items(
-    # Root paths for template files, relative to the project root.
-    [
-        pkg_resources.resource_filename("tutorbranding", "templates"),
-    ]
+# Add the "templates" folder as a template root
+hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
+    str(importlib_resources.files("tutorbranding") / "templates")
 )
 
 hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
-    # For each pair (source_path, destination_path):
-    # templates at ``source_path`` (relative to your ENV_TEMPLATE_ROOTS) will be
-    # rendered to ``destination_path`` (relative to your Tutor environment).
     [
         ("theme", "build/openedx/themes"),
         ("brand-openedx", "plugins/mfe/build/mfe"),
@@ -137,10 +118,10 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 # Force the rendering of scss files, even though they are included in a "partials" directory
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms/theme/")
 
+
 # MFEs
 @MFE_APPS.add()
 def _add_my_mfe(mfes):
-
     configuration = tutor_config.load('')
 
     for mfe_name, mfe_info in configuration['BRANDING_MFE'].items():
@@ -149,55 +130,60 @@ def _add_my_mfe(mfes):
     return mfes
 
 
-
-########################################
 # Commands
-########################################
-
 @click.group(help="Branding tools", name='branding')
 @click.pass_obj
-def branding_command(context):
-    pass
+def branding_command(context):  # pylint: disable=unused-argument
+    """
+    Dummy function to group the branding commands
+    :return:
+    """
 
 
 def _download_file(url: str, dest_dir: str, filename: str):
     fmt.echo_info(f"Downloading {filename} from {url} to {dest_dir}")
 
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
 
-        open(os.path.join(dest_dir, filename), "wb").write(response.content)
+        with open(os.path.join(dest_dir, filename), "wb") as f:
+            f.write(response.content)
 
     except HTTPError as http_err:
         fmt.echo_error(f'HTTP error occurred downloading {filename}: {http_err}')
-    except Exception as err:
-        fmt.echo_error(f'Error downloading {filename}: {err}')
 
 
 @click.command(help="Download image from url")
 @click.pass_obj
 def download_images(context):
+    """
+    Command to download images from a URL.
+    :param context: Click context
+    :return:
+    """
     fmt.echo_info("*** Downloading images ***")
-    config = tutor_config.load(context.root)
+    full_config = tutor_config.load(context.root)
 
     # Download LMS images
-    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'images')
+    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes',
+                            'theme', 'lms', 'static', 'images')
 
-    if "BRANDING_LMS_IMAGES" in config:
-        for image in config['BRANDING_LMS_IMAGES']:
+    if "BRANDING_LMS_IMAGES" in full_config:
+        for image in full_config['BRANDING_LMS_IMAGES']:
             Path(dest_dir).mkdir(parents=True, exist_ok=True)
-            _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
+            _download_file(url=image.get('url'), filename=image.get('filename'), dest_dir=dest_dir)
     else:
         fmt.echo_alert("No BRANDING_LMS_IMAGES configured")
 
     # Download CMS images
-    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'cms', 'static', 'images')
+    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes',
+                            'theme', 'cms', 'static', 'images')
 
-    if "BRANDING_CMS_IMAGES" in config:
+    if "BRANDING_CMS_IMAGES" in full_config:
         Path(dest_dir).mkdir(parents=True, exist_ok=True)
-        for image in config['BRANDING_CMS_IMAGES']:
-            _download_file(url=image['url'], filename=image['filename'], dest_dir=dest_dir)
+        for image in full_config['BRANDING_CMS_IMAGES']:
+            _download_file(url=image.get('url'), filename=image.get('filename'), dest_dir=dest_dir)
     else:
         fmt.echo_alert("No BRANDING_CMS_IMAGES configured")
 
@@ -205,25 +191,32 @@ def download_images(context):
 @click.command(help="Download and unzip font from url")
 @click.pass_obj
 def download_fonts(context):
+    """
+    Command to download fonts from a URL.
+    :param context: Click context
+    :return:
+    """
     fmt.echo_info("*** Downloading fonts ***")
-    config = tutor_config.load(context.root)
+    full_config = tutor_config.load(context.root)
 
     # Download fonts
-    dest_dir = os.path.join(context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'fonts')
-    dest_dir_mfe = os.path.join(context.root, 'env', 'plugins', 'mfe', 'build', 'mfe', 'brand-openedx', 'fonts')
+    dest_dir = os.path.join(
+        context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'fonts')
+    dest_dir_mfe = os.path.join(
+        context.root, 'env', 'plugins', 'mfe', 'build', 'mfe', 'brand-openedx', 'fonts')
 
-    if "BRANDING_FONTS_URLS" in config:
-        for font_url in config['BRANDING_FONTS_URLS']:
+    if "BRANDING_FONTS_URLS" in full_config:
+        for font_url in full_config['BRANDING_FONTS_URLS']:
             filename = 'font.zip'
             Path(dest_dir).mkdir(parents=True, exist_ok=True)
             _download_file(url=font_url, dest_dir=dest_dir, filename=filename)
 
             # Unzip the file
-            with zipfile.ZipFile(os.path.join(dest_dir, filename), 'r') as zip:
-                zip.extractall(dest_dir)
-                if 'mfe' in config.get('PLUGINS'):
-                    zip.extractall(dest_dir_mfe)
-                zip.printdir()
+            with zipfile.ZipFile(os.path.join(dest_dir, filename), 'r') as zipped_file:
+                zipped_file.extractall(dest_dir)
+                if 'mfe' in full_config.get('PLUGINS'):
+                    zipped_file.extractall(dest_dir_mfe)
+                zipped_file.printdir()
 
                 os.remove(os.path.join(dest_dir, filename))
 
@@ -236,19 +229,7 @@ branding_command.add_command(download_fonts)
 
 hooks.Filters.CLI_COMMANDS.add_item(branding_command)
 
-########################################
-# PATCH LOADING
-# (It is safe & recommended to leave
-#  this section as-is :)
-########################################
-
-# For each file in tutorbranding/patches,
-# apply a patch based on the file's name and contents.
-for path in glob(
-        os.path.join(
-            pkg_resources.resource_filename("tutorbranding", "patches"),
-            "*",
-        )
-):
+# Load patches from files
+for path in glob(str(importlib_resources.files("tutorbranding") / "patches" / "*")):
     with open(path, encoding="utf-8") as patch_file:
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))

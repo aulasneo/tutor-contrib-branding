@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Upgrade to Quince
+
 ## Version 16.1.2 (2024-07-22)
 - fix: Make BRANDING_CERTIFICATE_HTML override all _accomplishment-rendering.html
 

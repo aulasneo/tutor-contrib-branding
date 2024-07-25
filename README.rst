@@ -7,6 +7,9 @@ It can control the appearance of both legacy pages based on HTML
 (like the course catalog, dashboard, login, register, etc.), as well as
 MFE components.
 
+.. image:: https://img.shields.io/badge/linting-pylint-yellowgreen
+    :target: https://github.com/pylint-dev/pylint
+
 Installation
 ------------
 
