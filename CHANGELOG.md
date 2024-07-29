@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix Refactor MFE overriding of branding, header and footer
+
 ## Version 18.0.0 (2024-07-26)
 - Upgrade to Redwood
 
