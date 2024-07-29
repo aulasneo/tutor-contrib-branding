@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.1.0 (2024-07-29)
 - Fix Refactor MFE overriding of branding, header and footer
 
 ## Version 18.0.0 (2024-07-26)
