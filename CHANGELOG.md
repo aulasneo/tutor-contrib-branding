@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased
+- fix: Refactor MFE overriding of branding, header and footer.
+  Separate the npm install lines in one file per MFE. 
+  This change addresses the situation that not all MFEs import header and footer.
+
 ## Version 17.0.0 (2024-07-25)
 - Upgrade to Quince
 
