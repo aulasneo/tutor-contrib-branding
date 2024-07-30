@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 15.3.0 (2024-07-30)
 - fix: Make BRANDING_CERTIFICATE_HTML override all _accomplishment-rendering.html
 
 ## Version 15.2.0 (2023-11-23)
