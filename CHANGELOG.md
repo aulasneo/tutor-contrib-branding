@@ -1,6 +1,7 @@
 # Change log
 
 ## Unreleased
+- fix: Use pre-npm install for custom branding, header and footers
 - feat: Add BRANDING_THEME_REPOS setting to allow downloading themes from git.
 
 ## Version 18.1.0 (2024-07-29)
