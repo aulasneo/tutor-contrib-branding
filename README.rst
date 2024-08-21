@@ -147,6 +147,24 @@ Then run
 
     tutor branding download-images
 
+
+Customize MFE logos
+~~~~~~~~~~~~~~~~~~~~
+
+By default, the MFEs will take the logos from the theme assets' main logo.
+However you can now customize the MFE logos by using these variables:
+
+- BRANDING_MFE_LOGO_URL: Main logo used in the headers
+- BRANDING_MFE_LOGO_TRADEMARK_URL: This is a URL to a logo for use in the footer.
+  This is a different environment variable than LOGO_URL (used in frontend-component-header)
+  to accommodate sites that would like to have additional trademark information on a logo
+  in the footer, such as a (tm) or (r) symbol.
+- BRANDING_MFE_LOGO_WHITE_URL: White logo over transparent background intended for
+  the login page and other sites where it printed over images or dark background.
+
+The value of these settings must be a public accessible URL containing the image.
+
+
 Custom HTML block in home page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
