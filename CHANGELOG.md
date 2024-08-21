@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.3.0 (2024-08-21)
 - feat: Hide the upgrade button by default
 
 ## Version 18.2.0 (2024-08-21)
