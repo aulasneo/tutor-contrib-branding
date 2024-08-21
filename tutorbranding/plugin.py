@@ -56,6 +56,9 @@ config = {
         "OVERRIDES": "",
         "FONTS": "",
         "MFE": {},
+        "MFE_LOGO_URL": '',
+        "MFE_LOGO_WHITE_URL": '',
+        "MFE_LOGO_TRADEMARK_URL": '',
 
         # static page templates
         "STATIC_TEMPLATE_404": None,

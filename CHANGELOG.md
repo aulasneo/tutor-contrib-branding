@@ -2,7 +2,9 @@
 
 ## Unreleased
 - fix: Use pre-npm install for custom branding, header and footers
+- fix: use gettext instead of ugettext in static html templates
 - feat: Add BRANDING_THEME_REPOS setting to allow downloading themes from git.
+- feat: Allow overriding MFE logos
 
 ## Version 17.1.0 (2024-07-29)
 - fix: Refactor MFE overriding of branding, header and footer.
