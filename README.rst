@@ -252,7 +252,9 @@ Open edX instance. To do this, add the following configuration to config.yml:
 ::
 
     BRANDING_THEME_REPOS:
-      <theme name>: <theme git URL>
+      - name: <theme name>
+        url: <theme git URL, ending in .git>
+        version: <git branch or tag>
       ...
 
 You can add as many themes as you want, however only one can be active at a time.

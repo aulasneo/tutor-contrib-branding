@@ -1,7 +1,7 @@
 {% if BRANDING_THEME_REPOS is defined %}
 # Cloning the comprehensive theme repos
 RUN mkdir /openedx/themes
-{% for repo_name, repo_url in BRANDING_THEME_REPOS.items() %}
-RUN git clone --depth=1 {{ repo_url }} /openedx/themes/{{ repo_name }}
+{% for repo in BRANDING_THEME_REPOS %}
+RUN git clone --depth=1 {{ repo['url'] }} /openedx/themes/{{ repo['name'] }} --branch {{ repo['version'] }}
 {% endfor %}
 {% endif %}

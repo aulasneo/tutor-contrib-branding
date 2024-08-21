@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: refactor BRANDING_THEME_REPOS to allow repo versioning
+
 ## Version 17.3.0 (2024-08-21)
 - feat: Hide the upgrade button by default
 

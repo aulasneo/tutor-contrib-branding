@@ -26,7 +26,7 @@ domain_names = [
 ]
 for domain_name in domain_names:
 {% if BRANDING_THEME_REPOS is defined %}
-    assign_theme('{{ BRANDING_THEME_REPOS.keys()|first }}', domain_name)
+    assign_theme('{{ BRANDING_THEME_REPOS[0]['name'] }}', domain_name)
 {% else %}
     assign_theme('theme', domain_name)
 {% endif %}
