@@ -25,5 +25,9 @@ domain_names = [
     '{{ PREVIEW_LMS_HOST }}:8000',
 ]
 for domain_name in domain_names:
+{% if BRANDING_THEME_REPOS is defined %}
+    assign_theme('{{ BRANDING_THEME_REPOS.keys()|first }}', domain_name)
+{% else %}
     assign_theme('theme', domain_name)
+{% endif %}
 "
