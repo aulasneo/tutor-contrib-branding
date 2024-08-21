@@ -224,6 +224,34 @@ push to your custom repository and set the repository URL in the variables:
 - BRANDING_FRONTEND_COMPONENT_HEADER_REPO
 - BRANDING_FRONTEND_COMPONENT_FOOTER_REPO
 
+
+Downloading custom themes from a git repo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is now possible to store one or more whole comprehensive themes in git repositories and download to the 
+Open edX instance. To do this, add the following configuration to config.yml:
+
+::
+
+    BRANDING_THEME_REPOS:
+      <theme name>: <theme git URL>
+      ...
+
+You can add as many themes as you want, however only one can be active at a time.
+After adding this, save the configuration and rebuild the openedx image.
+Then run `tutor <variant> do init [--limit branding]` to enable the first theme.
+
+Notes: 
+
+- theme repos are not templates; it means that other BRANDING\_ settings, logos and fonts  will have no effect.
+  Include your own fonts, images, CSS and variables in the repo.
+- Do not use `theme` as a theme name. This is reserved for the base theme created from the branding template.
+- To change templates, go to `<LMS URL>/admin/theming/sitetheme/` and set the theme name to all sites.
+  Use `theme` as theme name to use the base theme.
+- MFE logos are taken by default from the theme logo. Restart the MFE service if you changed your logo in the theme
+  to make it available to the MFEs.
+
+
 Usage
 -----
 

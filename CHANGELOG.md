@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: Add BRANDING_THEME_REPOS setting to allow downloading themes from git.
+
 ## Version 17.1.0 (2024-07-29)
 - fix: Refactor MFE overriding of branding, header and footer.
   Separate the npm install lines in one file per MFE. 
