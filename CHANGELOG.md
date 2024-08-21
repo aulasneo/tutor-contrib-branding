@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: Hide the upgrade button by default
+
 ## Version 17.2.0 (2024-08-21)
 - fix: Use pre-npm install for custom branding, header and footers
 - fix: use gettext instead of ugettext in static html templates
