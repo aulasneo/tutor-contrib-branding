@@ -270,6 +270,14 @@ Notes:
   to make it available to the MFEs.
 
 
+Hiding the upgrade button
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since Quince release, the new learner-dashboard MFE includes an "Upgrade" button in each course card.
+The Branding plugin now disables this button by default. But if you want it back,
+just set `BRANDING_HIDE_UPGRADE_BUTTON` to `False`.
+
+
 Usage
 -----
 

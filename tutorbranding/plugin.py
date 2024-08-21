@@ -59,6 +59,7 @@ config = {
         "MFE_LOGO_URL": '',
         "MFE_LOGO_WHITE_URL": '',
         "MFE_LOGO_TRADEMARK_URL": '',
+        "HIDE_UPGRADE_BUTTON": True,
 
         # static page templates
         "STATIC_TEMPLATE_404": None,
