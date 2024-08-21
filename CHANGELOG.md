@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.2.0 (2024-08-21)
 - fix: Use pre-npm install for custom branding, header and footers
 - fix: use gettext instead of ugettext in static html templates
 - feat: Add BRANDING_THEME_REPOS setting to allow downloading themes from git.
