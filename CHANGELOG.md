@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 17.4.0 (2024-08-22)
 - feat: refactor BRANDING_THEME_REPOS to allow repo versioning
 
 ## Version 17.3.0 (2024-08-21)
