@@ -1,6 +1,7 @@
 """
 Tutor plugin to brand your Open edX instance.
 """
+import sys
 from glob import glob
 import os
 import zipfile
@@ -59,7 +60,12 @@ config = {
         "MFE_LOGO_URL": '',
         "MFE_LOGO_WHITE_URL": '',
         "MFE_LOGO_TRADEMARK_URL": '',
+
+        # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
         "HIDE_UPGRADE_BUTTON": True,
+        "HIDE_DASHBOARD_SIDEBAR": False,
+        "HIDE_PROGRAMS": False,
+        "FIT_COURSE_IMAGE": True,
 
         # static page templates
         "STATIC_TEMPLATE_404": None,
@@ -116,6 +122,7 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
         ("theme", "build/openedx/themes"),
         ("brand-openedx", "plugins/mfe/build/mfe"),
+        ("brand-openedx-learner-dashboard", "plugins/mfe/build/mfe"),
     ],
 )
 
@@ -144,19 +151,29 @@ def branding_command(context):  # pylint: disable=unused-argument
     """
 
 
-def _download_file(url: str, dest_dir: str, filename: str):
-    fmt.echo_info(f"Downloading {filename} from {url} to {dest_dir}")
+def _download_file(url: str, dest_dir: str, filename: str = None) -> str:
+    """
+    Download a file from internet and store it in the destination directory.
+    :param url: where to get the file from
+    :param dest_dir: where to put the file
+    :return: file name.
+    """
+    fmt.echo_info(f"Downloading {url} to {dest_dir}")
 
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
 
+        if not filename:
+            filename = os.path.basename(url)
+
         with open(os.path.join(dest_dir, filename), "wb") as f:
             f.write(response.content)
 
     except HTTPError as http_err:
-        fmt.echo_error(f'HTTP error occurred downloading {filename}: {http_err}')
+        fmt.echo_error(f'HTTP error occurred downloading {url}: {http_err}')
 
+    return filename
 
 @click.command(help="Download image from url")
 @click.pass_obj
@@ -200,29 +217,38 @@ def download_fonts(context):
     :param context: Click context
     :return:
     """
-    fmt.echo_info("*** Downloading fonts ***")
     full_config = tutor_config.load(context.root)
 
     # Download fonts
-    dest_dir = os.path.join(
-        context.root, 'env', 'build', 'openedx', 'themes', 'theme', 'lms', 'static', 'fonts')
-    dest_dir_mfe = os.path.join(
-        context.root, 'env', 'plugins', 'mfe', 'build', 'mfe', 'brand-openedx', 'fonts')
+    dest_dirs = [
+        os.path.join(context.root, 'env', 'build', 'openedx', 'themes',
+                     'theme', 'lms', 'static', 'fonts'),
+        os.path.join(context.root, 'env', 'plugins', 'mfe', 'build', 'mfe',
+                     'brand-openedx', 'fonts'),
+        os.path.join(context.root, 'env', 'plugins', 'mfe', 'build', 'mfe',
+                     'brand-openedx-learner-dashboard', 'fonts'),
+    ]
 
     if "BRANDING_FONTS_URLS" in full_config:
         for font_url in full_config['BRANDING_FONTS_URLS']:
-            filename = 'font.zip'
-            Path(dest_dir).mkdir(parents=True, exist_ok=True)
-            _download_file(url=font_url, dest_dir=dest_dir, filename=filename)
+            for dest_dir in dest_dirs:
+                Path(dest_dir).mkdir(parents=True, exist_ok=True)
+                fmt.echo_info(f"Downloading fonts from {font_url}")
+                filename = _download_file(url=font_url, dest_dir=dest_dir)
 
-            # Unzip the file
-            with zipfile.ZipFile(os.path.join(dest_dir, filename), 'r') as zipped_file:
-                zipped_file.extractall(dest_dir)
-                if 'mfe' in full_config.get('PLUGINS'):
-                    zipped_file.extractall(dest_dir_mfe)
-                zipped_file.printdir()
+                if filename.endswith('.zip'):
+                    # Unzip the file
+                    fmt.echo_info(f"Unzipping font file {filename}")
+                    zipped_filename = os.path.join(dest_dir, filename)
+                    try:
+                        with zipfile.ZipFile(zipped_filename, 'r') as zipped_file:
+                            zipped_file.extractall(dest_dir)
+                            zipped_file.printdir()
 
-                os.remove(os.path.join(dest_dir, filename))
+                            os.remove(os.path.join(dest_dir, filename))
+                    except zipfile.BadZipFile:
+                        fmt.echo_error(f"File {zipped_filename} is not a zip file.")
+                        sys.exit(1)
 
     else:
         fmt.echo_alert("No BRANDING_FONTS_URLS configured")

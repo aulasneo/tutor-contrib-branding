@@ -272,13 +272,25 @@ Notes:
   to make it available to the MFEs.
 
 
-Hiding the upgrade button
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Customizing the Learner Dashboard
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since Quince release, the new learner-dashboard MFE includes an "Upgrade" button in each course card.
-The Branding plugin now disables this button by default. But if you want it back,
-just set `BRANDING_HIDE_UPGRADE_BUTTON` to `False`.
+Since Quince release, the new learner-dashboard MFE includes a number of features that might not
+be part of your use cases, and cannot be disabled with settings.
 
+- Hide the upgrade button
+    The Branding plugin now disables this button by default. But if you want it back,
+    just set `BRANDING_HIDE_UPGRADE_BUTTON` to `False`.
+
+- Hide the Programs tab
+    The Programs tab can be hidden by setting `BRANDING_HIDE_PROGRAMS` to True.
+
+- Hide the sidebar
+    The sidebar with the "Looking for new challenges" text can be hidden by setting
+    `BRANDING_HIDE_DASHBOARD_SIDEBAR` to True.
+
+- Make the course image fit into the course card
+    By default, the images is clipped.
 
 Usage
 -----
