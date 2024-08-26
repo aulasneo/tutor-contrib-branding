@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 17.5.0 (2024-08-26)
 - feat: Allow hiding the Programs tab and the sideber in the learner dashboard
 - feat: Make the course image fit in the course card at the learner dashboard.
 
