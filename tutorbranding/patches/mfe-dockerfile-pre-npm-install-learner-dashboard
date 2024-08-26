@@ -1,4 +1,4 @@
 # Install branding package
 RUN mkdir /openedx/brand-openedx
-COPY ./brand-openedx /openedx/brand-openedx
+COPY ./brand-openedx-learner-dashboard /openedx/brand-openedx
 RUN npm install '@edx/brand@file:/openedx/brand-openedx'

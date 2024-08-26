@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+- feat: Allow hiding the Programs tab and the sideber in the learner dashboard
+- feat: Make the course image fit in the course card at the learner dashboard.
+
 ## Version 18.4.0 (2024-08-22)
 - feat: refactor BRANDING_THEME_REPOS to allow repo versioning
 

@@ -1,0 +1,47 @@
+// Use this file to define style overrides for @edx/paragon
+// This file is included after all Paragon styles, but should generally avoid using private mixins in Paragon.
+
+//Learning//
+
+//----------------------------- Course Home ----------------------------------//
+body{
+    background-color: {{ BRANDING_BODY }};
+}
+
+.bg-primary {
+    background: {{ BRANDING_BG_PRIMARY }};
+}
+
+{% if BRANDING_HIDE_UPGRADE_BUTTON %}
+// Remove the upgrade button in the learner dashboard course cards
+#dashboard-content .course-card div[data-test-id="CourseCardActions"] button:first-child {
+    display:none;
+}
+{% endif %}
+
+{% if BRANDING_HIDE_DASHBOARD_SIDEBAR %}
+.sidebar-column {
+    display: none;
+}
+{% endif %}
+
+{% if BRANDING_HIDE_PROGRAMS %}
+header :nth-child(3) {
+    display: none;
+}
+{% endif %}
+
+{% if BRANDING_FIT_COURSE_IMAGE %}
+.pgn__card .pgn__card-wrapper-image-cap.horizontal .pgn__card-image-cap {
+    object-fit: contain !important;
+}
+@media (max-width: 767px) {
+    .pgn__card .pgn__card-wrapper-image-cap.horizontal {
+        max-width: 100% !important;
+        display: flex;
+        justify-content: center;
+    }
+}
+{% endif %}
+
+{{ BRANDING_OVERRIDES }}
