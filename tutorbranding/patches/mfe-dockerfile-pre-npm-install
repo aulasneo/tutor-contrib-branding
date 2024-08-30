@@ -1,0 +1,13 @@
+# Install branding package
+{% if BRANDING_FONTS_URLS %}
+RUN apt update && apt install -y wget unzip
+{% endif %}
+RUN mkdir /openedx/brand-openedx
+COPY ./brand-openedx /openedx/brand-openedx
+{% for font_url in BRANDING_FONTS_URLS %}
+RUN wget --directory-prefix /openedx/brand-openedx/fonts {{ font_url }}
+{% if font_url.endswith(".zip") %}
+RUN unzip -o /openedx/brand-openedx/fonts/{{ font_url.split('/') | last }} -d /openedx/brand-openedx/fonts
+{% endif %}
+{% endfor %}
+RUN npm install '@edx/brand@file:/openedx/brand-openedx'

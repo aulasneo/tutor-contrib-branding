@@ -68,12 +68,6 @@ Managing fonts
 ~~~~~~~~~~~~~~
 
 Set ``BRANDING_FONTS_URLS`` to a list of URLS pointing to a zipped set of font files.
-Then use the ``tutor branding download-fonts`` command to download an unzip the font files
-to ``$(tutor config printroot)/env/build/openedx/themes/theme/lms/static/fonts`` and
-``$(tutor config printroot)/env/plugins/mfe/build/mfe/brand-openedx/fonts`` if the mfe plugin is enabled.
-
-Tip: copy the download url from the `<https://fonts.google.com>`__ site,
-for instance `<https://fonts.google.com/download?family=Roboto%20Flex>`__.
 
 E.g., to add Roboto Flex font, set:
 
@@ -82,13 +76,7 @@ E.g., to add Roboto Flex font, set:
     BRANDING_FONTS_URLS:
     - https://fonts.google.com/download?family=Roboto%20Flex
 
-Then run
-
-::
-
-    tutor branding download-fonts
-
-To add a specific font definition, use the ``BRANDING_FONTS`` setting, e.g.:
+Then add a specific font definition, use the ``BRANDING_FONTS`` setting, e.g.:
 
 ::
 
@@ -118,6 +106,7 @@ LMS:
 
 - favicon.ico
 - logo.png
+- banner.png
 
 CMS:
 
@@ -140,12 +129,6 @@ E.g., to add custom logos and banner set the following:
     - filename: studio-logo.png
       url: https://url/to/studio-logo.png
     BRANDING_HOMEPAGE_BG_IMAGE: banner.png
-
-Then run
-
-::
-
-    tutor branding download-images
 
 
 Customize MFE logos
