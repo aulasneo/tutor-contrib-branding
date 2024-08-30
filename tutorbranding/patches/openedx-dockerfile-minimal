@@ -1,0 +1,4 @@
+# Branding plugin: this is needed to download and uncompress images and fonts.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt update && apt install -y wget unzip

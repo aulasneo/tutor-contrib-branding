@@ -1,7 +1,23 @@
 {% if BRANDING_THEME_REPOS is defined %}
-# Cloning the comprehensive theme repos
+# Branding plugin: cloning the comprehensive theme repos
 RUN mkdir /openedx/themes
 {% for repo in BRANDING_THEME_REPOS %}
 RUN git clone --depth=1 {{ repo['url'] }} /openedx/themes/{{ repo['name'] }} --branch {{ repo['version'] }}
 {% endfor %}
 {% endif %}
+# Branding plugin: downloading fonts and images, if any, to the standard theme
+{% if BRANDING_LMS_IMAGES %}RUN mkdir -p /openedx/themes/theme/lms/static/images/{% endif %}
+{% if BRANDING_CMS_IMAGES %}RUN mkdir -p /openedx/themes/theme/cms/static/images/{% endif %}
+{% if BRANDING_FONTS_URLS %}RUN mkdir -p /openedx/themes/theme/lms/static/fonts/{% endif %}
+{% for image in BRANDING_LMS_IMAGES %}
+RUN wget -O /openedx/themes/theme/lms/static/images/{{ image['filename'] }} {{ image['url'] }}
+{% endfor %}
+{% for image in BRANDING_CMS_IMAGES %}
+RUN wget -O /openedx/themes/theme/cms/static/images/{{ image['filename'] }} {{ image['url'] }}
+{% endfor %}
+{% for font_url in BRANDING_FONTS_URLS %}
+RUN wget --directory-prefix /openedx/themes/theme/lms/static/fonts {{ font_url }}
+{% if font_url.endswith(".zip") %}
+RUN unzip -o /openedx/themes/theme/lms/static/fonts/{{ font_url.split('/') | last }} -d /openedx/themes/theme/lms/static/fonts
+{% endif %}
+{% endfor %}

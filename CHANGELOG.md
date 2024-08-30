@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- ref: Refactor download images
+
 ## Version 18.5.0 (2024-08-26)
 - feat: Allow hiding the Programs tab and the sideber in the learner dashboard
 - feat: Make the course image fit in the course card at the learner dashboard.
