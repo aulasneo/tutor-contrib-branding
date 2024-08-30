@@ -272,6 +272,10 @@ be part of your use cases, and cannot be disabled with settings.
     The sidebar with the "Looking for new challenges" text can be hidden by setting
     `BRANDING_HIDE_DASHBOARD_SIDEBAR` to True.
 
+- Hide the `Looking for a new challenge?` sidebar widget
+    You can leave the sidebar visible and hide only the widget by setting
+    `BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET` to True.
+
 - Make the course image fit into the course card
     By default, the images is clipped.
 

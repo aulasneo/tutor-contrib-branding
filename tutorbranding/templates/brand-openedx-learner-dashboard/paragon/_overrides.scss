@@ -23,6 +23,10 @@ body{
 .sidebar-column {
     display: none;
 }
+{% elif BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET %}
+#looking-for-challenge-widget {
+    display: none;
+}
 {% endif %}
 
 {% if BRANDING_HIDE_PROGRAMS %}
