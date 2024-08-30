@@ -2,6 +2,7 @@
 
 ## Unreleased
 - ref: Refactor download images
+- feat: Add BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET setting
 
 ## Version 17.5.0 (2024-08-26)
 - feat: Allow hiding the Programs tab and the sideber in the learner dashboard
