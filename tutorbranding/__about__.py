@@ -1,4 +1,4 @@
 """
 Package version
 """
-__version__ = "18.5.0"
+__version__ = "18.6.0"

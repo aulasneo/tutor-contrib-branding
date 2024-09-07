@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.6.0 (2024-09-07)
 - ref: Refactor download images
 - feat: Add BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET setting
 
