@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.6.1 (2024-10-23)
 - fix: Fixed a bug that happened when the plugin was ran from a different directory than the config.yml.
 
 ## Version 18.6.0 (2024-09-07)
