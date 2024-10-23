@@ -4,6 +4,7 @@ Tutor plugin to brand your Open edX instance.
 from glob import glob
 import os
 
+import click
 import importlib_resources
 from tutormfe.hooks import MFE_APPS
 
@@ -131,11 +132,11 @@ hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms
 # MFEs
 @MFE_APPS.add()
 def _add_my_mfe(mfes):
-    configuration = tutor_config.load('')
+    current_context = click.get_current_context()
+    root = current_context.params.get('root')
+    configuration = tutor_config.load(root)
 
-    for mfe_name, mfe_info in configuration['BRANDING_MFE'].items():
-        mfes[mfe_name] = mfe_info
-
+    mfes.update(configuration['BRANDING_MFE'])
     return mfes
 
 
