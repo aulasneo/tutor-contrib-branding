@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- fix: Fixed a bug that happened when the plugin was ran from a different directory than the config.yml.
+
 ## Version 17.6.0 (2024-08-30)
 - ref: Refactor download images
 - feat: Add BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET setting
