@@ -133,7 +133,7 @@ hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms
 @MFE_APPS.add()
 def _add_my_mfe(mfes):
     current_context = click.get_current_context()
-    root = current_context.params.get('root')
+    root = current_context.obj.root
     configuration = tutor_config.load(root)
 
     mfes.update(configuration['BRANDING_MFE'])
