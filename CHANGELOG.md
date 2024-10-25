@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.6.2 (2024-10-25)
 - fix: Fix MFE overrides, empty root issue
 
 ## Version 18.6.1 (2024-10-23)
