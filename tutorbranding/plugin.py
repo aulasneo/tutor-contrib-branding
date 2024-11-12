@@ -59,6 +59,9 @@ config = {
         "MFE_LOGO_WHITE_URL": '',
         "MFE_LOGO_TRADEMARK_URL": '',
 
+        # Repos
+        "MFE_PLATFORM_REPO": None,
+
         # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
         "HIDE_UPGRADE_BUTTON": True,
         "HIDE_DASHBOARD_SIDEBAR": False,
