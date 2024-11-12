@@ -226,6 +226,28 @@ push to your custom repository and set the repository URL in the variables:
 - BRANDING_FRONTEND_COMPONENT_FOOTER_REPO
 
 
+Using a custom frontend-platform
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some advanced users might want to customize frontend-platform. This repo is imported by
+most MFEs and brings some features common to all.
+A typical use case is to add a script in the <head> of all pages.
+
+To use a custom repo for frontend-platform, set :code:`BRANDING_MFE_PLATFORM_REPO`. Use the same
+format as would be used by :code:`npm install`. Add a :code:`#` and a branch name or version number.
+
+E.g.,
+
+::
+
+    BRANDING_MFE_PLATFORM_REPO: https://github.com/openedx/frontend-platform#v7.1.4
+
+Note that the version of frontend_platform must contain a "prepare" script with the same value as the
+"build" script in package.json. Also set the version to the actual version number of the upstream repo,
+instead of the default "1.0.0-semantically-released". Finally, update package-lock.json with :code:`npm install`
+to match the latest changes before pushing.
+
+
 Downloading custom themes from a git repo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

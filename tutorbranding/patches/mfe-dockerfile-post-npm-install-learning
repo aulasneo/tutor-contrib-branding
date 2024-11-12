@@ -1,0 +1,4 @@
+{% if BRANDING_MFE_PLATFORM_REPO is not none %}# Custom frontend-platform from branding plugin
+RUN npm install '@edx/frontend-platform@{{ BRANDING_MFE_PLATFORM_REPO }}'
+RUN cp -r node_modules/@edx/frontend-platform/dist/* node_modules/@edx/frontend-platform
+{% endif %}
