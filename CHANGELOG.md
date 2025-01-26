@@ -2,6 +2,7 @@
 
 ## Unreleased
 - feat: Add BRANDING_MFE_PLATFORM_REPO to set a custom frontend-platform
+- doc: Update README
 
 ## Version 18.6.2 (2024-10-25)
 - fix: Fix MFE overrides, empty root issue
