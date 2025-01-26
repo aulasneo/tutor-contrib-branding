@@ -285,8 +285,6 @@ Usage
 ::
 
     tutor plugins enable branding
-    tutor branding download-images
-    tutor branding download-fonts
     tutor images build openedx
     tutor images build mfe
     tutor local settheme theme
