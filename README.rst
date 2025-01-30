@@ -309,7 +309,7 @@ Usage
     tutor plugins enable branding
     tutor images build openedx
     tutor images build mfe
-    tutor local settheme theme
+    tutor local do init --limit branding
 
 In K8s deployments, you will need to push the docker images and restart Tutor.
 
