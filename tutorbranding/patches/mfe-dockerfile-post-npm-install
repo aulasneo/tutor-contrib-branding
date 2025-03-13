@@ -1,0 +1,10 @@
+{% if BRANDING_MFE_PLATFORM_REPO is not none %}# Custom frontend-platform from branding plugin
+RUN npm install '@edx/frontend-platform@{{ BRANDING_MFE_PLATFORM_REPO }}'
+# The custom repo should have a "prepare": "make build" item in the "scripts" section of package.json.
+# It will build the src but will not copy the result. We have to do it manually
+RUN cp -r node_modules/@edx/frontend-platform/dist/* node_modules/@edx/frontend-platform
+# We need to copy manually the i18n scripts after the custom installation.
+# See https://github.com/openedx/frontend-platform/blob/master/src/i18n/scripts/README.md
+RUN for filename in node_modules/@edx/frontend-platform/i18n/scripts/*.js; do ln -s ../@edx/frontend-platform/i18n/scripts/$(basename $filename) node_modules/.bin/$(basename $filename); done
+# End of frontend-platform customization by branding plugin.
+{% endif %}
