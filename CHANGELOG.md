@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.8.0 (2025-03-13)
 - fix: Refactored patch for custom frontend-platform for Redwood
 - fix: Removed footer from account, which now uses slots.
 
