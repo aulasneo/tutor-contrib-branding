@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 18.8.1 (2025-03-26)
 fix: restored mfe-dockerfile-pre-npm-install-learner-dashboard for specific learner-dashboard customizations
 
 ## Version 18.8.0 (2025-03-13)
