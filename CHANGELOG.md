@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+fix: restored mfe-dockerfile-pre-npm-install-learner-dashboard for specific learner-dashboard customizations
+
 ## Version 18.8.0 (2025-03-13)
 - fix: Refactored patch for custom frontend-platform for Redwood
 - fix: Removed footer from account, which now uses slots.
