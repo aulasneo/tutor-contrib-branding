@@ -29,12 +29,6 @@ body{
 }
 {% endif %}
 
-{% if BRANDING_HIDE_PROGRAMS %}
-header :nth-child(3) {
-    display: none;
-}
-{% endif %}
-
 {% if BRANDING_FIT_COURSE_IMAGE %}
 .pgn__card .pgn__card-wrapper-image-cap.horizontal .pgn__card-image-cap {
     object-fit: contain !important;
