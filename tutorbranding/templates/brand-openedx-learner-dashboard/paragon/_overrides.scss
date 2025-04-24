@@ -12,13 +12,6 @@ body{
     background: {{ BRANDING_BG_PRIMARY }};
 }
 
-{% if BRANDING_HIDE_UPGRADE_BUTTON %}
-// Remove the upgrade button in the learner dashboard course cards
-#dashboard-content .course-card div[data-test-id="CourseCardActions"] button:first-child {
-    display:none;
-}
-{% endif %}
-
 {% if BRANDING_HIDE_DASHBOARD_SIDEBAR %}
 .sidebar-column {
     display: none;

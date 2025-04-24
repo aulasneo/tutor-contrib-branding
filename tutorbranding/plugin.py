@@ -63,7 +63,6 @@ config = {
         "MFE_PLATFORM_REPO": None,
 
         # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
-        "HIDE_UPGRADE_BUTTON": True,
         "HIDE_DASHBOARD_SIDEBAR": False,
         "HIDE_LOOKING_FOR_CHALLENGE_WIDGET": False,
         "FIT_COURSE_IMAGE": True,

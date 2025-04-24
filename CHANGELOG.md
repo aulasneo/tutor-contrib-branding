@@ -3,6 +3,7 @@
 ## Unreleased
 - chore: Update dependencies for Sumac
 - revert: Remove BRANDING_HIDE_PROGRAMS unneeded in Sumac.
+- revert: Remove BRANDING_HIDE_UPGRADE BUTTON unneeded in Sumac.
 
 ## Version 18.8.1 (2025-03-26)
 fix: restored mfe-dockerfile-pre-npm-install-learner-dashboard for specific learner-dashboard customizations
