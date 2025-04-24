@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+chore: Update dependencies for Sumac
+
 ## Version 18.8.1 (2025-03-26)
 fix: restored mfe-dockerfile-pre-npm-install-learner-dashboard for specific learner-dashboard customizations
 
