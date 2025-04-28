@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 19.0.0 (2025-04-28)
 - chore: Update dependencies for Sumac
 - revert: Remove BRANDING_HIDE_PROGRAMS unneeded in Sumac.
 - revert: Remove BRANDING_HIDE_UPGRADE BUTTON unneeded in Sumac.
