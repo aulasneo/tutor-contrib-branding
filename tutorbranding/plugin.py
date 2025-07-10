@@ -9,7 +9,7 @@ import importlib_resources
 from tutormfe.hooks import MFE_APPS
 
 from tutor import config as tutor_config
-from tutor import hooks
+from tutor import fmt, hooks
 
 from .__about__ import __version__
 
@@ -137,7 +137,11 @@ def _add_my_mfe(mfes):
     root = current_context.params.get('root')
     if root:
         configuration = tutor_config.load(root)
-        mfes.update(configuration['BRANDING_MFE'])
+        for mfe_name, mfe_config in configuration['BRANDING_MFE'].items():
+            if mfe_name not in mfes:
+                fmt.echo_error(f"MFE {mfe_name} not found")
+                exit(1)
+            mfes[mfe_name].update(mfe_config)
     return mfes
 
 

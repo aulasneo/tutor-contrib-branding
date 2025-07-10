@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: improve overriding MFE. Now you can declare MFEs without declaring the MFE port if it does not change.
+
 ## Version 19.0.0 (2025-04-28)
 - chore: Update dependencies for Sumac
 - revert: Remove BRANDING_HIDE_PROGRAMS unneeded in Sumac.
