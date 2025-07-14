@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- fix: Improve handling of custom MFEs.
+
 ## Version 19.0.1 (2025-07-10)
 - feat: improve overriding MFE. Now you can declare MFEs without declaring the MFE port if it does not change.
 

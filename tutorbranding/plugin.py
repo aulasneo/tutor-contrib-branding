@@ -138,10 +138,22 @@ def _add_my_mfe(mfes):
     if root:
         configuration = tutor_config.load(root)
         for mfe_name, mfe_config in configuration['BRANDING_MFE'].items():
+            # Check for custom MFE port
             if mfe_name not in mfes:
-                fmt.echo_error(f"MFE {mfe_name} not found")
-                exit(1)
-            mfes[mfe_name].update(mfe_config)
+                if 'repository' not in mfe_config:
+                    fmt.echo_error(f"Custom MFE {mfe_name} must have a repository")
+                    exit(1)
+                if 'port' not in mfe_config:
+                    fmt.echo_error(f"Custom MFE {mfe_name} must have a port")
+                    exit(1)
+                for base_mfe_name, base_mfe_config in mfes.items():
+                    if base_mfe_config['port'] == mfe_config['port']:
+                        fmt.echo_error(f"Custom MFE {mfe_name} port {mfe_config['port']} already taken by {base_mfe_name}")
+                        exit(1)
+                fmt.echo_info(f"Adding custom MFE {mfe_name} with repository {mfe_config['repository']} and port {mfe_config['port']}")
+                mfes[mfe_name] = mfe_config
+            else:
+                mfes[mfe_name].update(mfe_config)
     return mfes
 
 
