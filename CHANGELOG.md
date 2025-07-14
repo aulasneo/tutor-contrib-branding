@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 19.0.2 (2025-07-14)
 - fix: Improve handling of custom MFEs.
 
 ## Version 19.0.1 (2025-07-10)
