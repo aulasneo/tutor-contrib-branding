@@ -150,7 +150,7 @@ def _add_my_mfe(mfes):
                     if base_mfe_config['port'] == mfe_config['port']:
                         fmt.echo_error(f"Custom MFE {mfe_name} port {mfe_config['port']} already taken by {base_mfe_name}")
                         exit(1)
-                fmt.echo_info(f"Adding custom MFE {mfe_name} with repository {mfe_config['repository']} and port {mfe_config['port']}")
+                fmt.echo_alert(f"Adding custom MFE {mfe_name} with repository {mfe_config['repository']} and port {mfe_config['port']}")
                 mfes[mfe_name] = mfe_config
             else:
                 mfes[mfe_name].update(mfe_config)

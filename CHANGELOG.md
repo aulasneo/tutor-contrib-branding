@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- fix: Use fmt.echo_alert instead of fmt.echo_info when warning about custom MFEs. `MFE_APPS.add()` is called with every tutor config commands, so `fmt.echo_info` is not appropriate when storing the output of `tutor config` commands in variables. `fmt.echo_alert` sends output to stderr.
+
 ## Version 19.0.2 (2025-07-14)
 - fix: Improve handling of custom MFEs.
 
