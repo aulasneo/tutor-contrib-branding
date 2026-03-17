@@ -17,6 +17,8 @@ Installation
 
     pip install tutor-contrib-branding
 
+This release targets Open edX Teak with Tutor 20.x.
+
 Configuration
 -------------
 
@@ -211,8 +213,11 @@ To override the MFE repo information, set the `BRANDING_MFE` variable as in this
     BRANDING_MFE:
       authn:
         port: 2001
-        repository: https://github.com/myorg/myfork
+        repository: https://github.com/myorg/myfork.git
         version: mybranch
+
+For custom MFEs, make sure the repository URL ends in ``.git`` and the repository
+implements ``make pull_translations``, as required by current Tutor MFE builds.
 
 
 Customizing MFE header and footer

@@ -39,7 +39,7 @@ from openedx.core.djangolib.markup import HTML, Text
         </div>
 
       </header>
-{% if BRANDING_INDEX_ADDITIONAL_HTML is defined %}
+{% if BRANDING_INDEX_ADDITIONAL_HTML %}
 {{ BRANDING_INDEX_ADDITIONAL_HTML }}
 {% endif %}
       <%include file="${courses_list}" />

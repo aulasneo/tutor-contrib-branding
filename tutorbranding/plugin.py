@@ -55,17 +55,22 @@ config = {
         "FONTS_URLS": [],
 
         "MFE": {},
+        "FRONTEND_COMPONENT_HEADER_REPO": None,
+        "FRONTEND_COMPONENT_FOOTER_REPO": None,
         "MFE_LOGO_URL": '',
         "MFE_LOGO_WHITE_URL": '',
         "MFE_LOGO_TRADEMARK_URL": '',
 
         # Repos
         "MFE_PLATFORM_REPO": None,
+        "THEME_REPOS": None,
 
         # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
         "HIDE_DASHBOARD_SIDEBAR": False,
         "HIDE_LOOKING_FOR_CHALLENGE_WIDGET": False,
         "FIT_COURSE_IMAGE": True,
+        "INDEX_ADDITIONAL_HTML": None,
+        "CERTIFICATE_HTML": None,
 
         # static page templates
         "STATIC_TEMPLATE_404": None,
@@ -141,15 +146,23 @@ def _add_my_mfe(mfes):
             # Check for custom MFE port
             if mfe_name not in mfes:
                 if 'repository' not in mfe_config:
-                    fmt.echo_error(f"Custom MFE {mfe_name} must have a repository")
-                    exit(1)
+                    raise click.ClickException(
+                        f"Custom MFE {mfe_name} must have a repository"
+                    )
                 if 'port' not in mfe_config:
-                    fmt.echo_error(f"Custom MFE {mfe_name} must have a port")
-                    exit(1)
+                    raise click.ClickException(
+                        f"Custom MFE {mfe_name} must have a port"
+                    )
+                if not mfe_config['repository'].endswith('.git'):
+                    raise click.ClickException(
+                        f"Custom MFE {mfe_name} repository must end with .git"
+                    )
                 for base_mfe_name, base_mfe_config in mfes.items():
                     if base_mfe_config['port'] == mfe_config['port']:
-                        fmt.echo_error(f"Custom MFE {mfe_name} port {mfe_config['port']} already taken by {base_mfe_name}")
-                        exit(1)
+                        raise click.ClickException(
+                            f"Custom MFE {mfe_name} port {mfe_config['port']} "
+                            f"already taken by {base_mfe_name}"
+                        )
                 fmt.echo_alert(f"Adding custom MFE {mfe_name} with repository {mfe_config['repository']} and port {mfe_config['port']}")
                 mfes[mfe_name] = mfe_config
             else:

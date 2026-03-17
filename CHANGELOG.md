@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased
+- feat: target Open edX Teak with Tutor 20.x
+- fix: register optional branding settings for custom header/footer repos, theme repos, homepage HTML and certificate HTML
+- fix: use truthy checks for optional config values in templates and Dockerfile patches
+- fix: validate custom MFE repositories end in `.git` and raise `click.ClickException` for invalid custom MFE configuration
+- fix: remove the stale `urllib3` dependency pin and correct package metadata
+- doc: update README for Tutor 20.x and current custom MFE requirements
+
 ## Version 19.0.3 (2025-07-21)
 - fix: Use fmt.echo_alert instead of fmt.echo_info when warning about custom MFEs. `MFE_APPS.add()` is called with every tutor config commands, so `fmt.echo_info` is not appropriate when storing the output of `tutor config` commands in variables. `fmt.echo_alert` sends output to stderr.
 
