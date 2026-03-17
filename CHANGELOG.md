@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 20.0.0 (2026-03-17)
 - feat: target Open edX Teak with Tutor 20.x
 - fix: register optional branding settings for custom header/footer repos, theme repos, homepage HTML and certificate HTML
 - fix: use truthy checks for optional config values in templates and Dockerfile patches
