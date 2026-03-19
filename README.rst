@@ -297,7 +297,8 @@ be part of your use cases, and cannot be disabled with settings.
     `BRANDING_HIDE_LOOKING_FOR_CHALLENGE_WIDGET` to True.
 
 - Make the course image fit into the course card
-    By default, the images is clipped.
+    By default, the images is clipped. You can make it fit by setting
+    `BRANDING_FIT_COURSE_IMAGE` to True.
 
 Usage
 -----
