@@ -1,4 +1,5 @@
 tutor==20.0.3
+tutor-mfe==20.0.0
 black
 pylint
 twine>=6.2.0
