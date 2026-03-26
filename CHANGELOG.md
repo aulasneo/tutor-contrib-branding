@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased
+- feat: add local development automation with a `Makefile` and pinned dev requirements
+- feat: add GitHub Actions test and release workflows aligned with the current plugin maintenance flow
+- ref: adopt `pyproject.toml`-based builds while keeping package metadata aligned
+- breaking: require Python 3.11 or newer
+- chore: ignore generated Tutor `config.yml` and `env/` artifacts from local test runs
+
 ## Version 20.0.0 (2026-03-17)
 - feat: target Open edX Teak with Tutor 20.x
 - fix: register optional branding settings for custom header/footer repos, theme repos, homepage HTML and certificate HTML

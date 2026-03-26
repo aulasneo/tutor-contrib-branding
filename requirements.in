@@ -1,0 +1,7 @@
+tutor==20.0.3
+black
+pylint
+twine>=6.2.0
+build
+pkginfo>=1.12.0
+pip-tools

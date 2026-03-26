@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release-eligibility:
+    name: Check release eligibility
+    runs-on: ubuntu-latest
+    outputs:
+      on_main: ${{ steps.check.outputs.on_main }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Validate tag format
+      run: |
+        if [[ ! "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Tag ${GITHUB_REF_NAME} does not match vX.X.X"
+          exit 1
+        fi
+
+    - name: Check whether tag points to main
+      id: check
+      run: |
+        git fetch origin main
+        if git branch -r --contains "$GITHUB_SHA" | grep -qx '  origin/main'; then
+          echo "on_main=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "on_main=false" >> "$GITHUB_OUTPUT"
+          echo "Skipping publish because $GITHUB_SHA is not contained in origin/main"
+        fi
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: release-eligibility
+    if: needs.release-eligibility.outputs.on_main == 'true'
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: make requirements
+
+    - name: Run test suite
+      run: make test
+
+  publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: [release-eligibility, test]
+    if: needs.release-eligibility.outputs.on_main == 'true'
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11'
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: make requirements
+
+    - name: Build package
+      run: make build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        print-hash: true

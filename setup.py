@@ -51,7 +51,7 @@ setup(
     long_description_content_type="text/x-rst",
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    python_requires=">=3.9",
+    python_requires=">=3.11",
     install_requires=["tutor >= 20.0.0, < 21.0.0"],
     entry_points={
         "tutor.plugin.v1": [
@@ -64,8 +64,6 @@ setup(
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
     ],

@@ -1,20 +1,17 @@
-"""
-Tutor plugin to brand your Open edX instance.
-"""
-from glob import glob
 import os
+from glob import glob
+from typing import Any, cast
 
 import click
 import importlib_resources
-from tutormfe.hooks import MFE_APPS
-
 from tutor import config as tutor_config
 from tutor import fmt, hooks
+from tutormfe.hooks import MFE_APPS
 
 from .__about__ import __version__
 
 # Configuration
-config = {
+config: dict[str, dict[str, Any]] = {
     # Add here your new settings
     "defaults": {
         "VERSION": __version__,
@@ -53,25 +50,21 @@ config = {
         "LMS_IMAGES": [],
         "CMS_IMAGES": [],
         "FONTS_URLS": [],
-
         "MFE": {},
         "FRONTEND_COMPONENT_HEADER_REPO": None,
         "FRONTEND_COMPONENT_FOOTER_REPO": None,
-        "MFE_LOGO_URL": '',
-        "MFE_LOGO_WHITE_URL": '',
-        "MFE_LOGO_TRADEMARK_URL": '',
-
+        "MFE_LOGO_URL": "",
+        "MFE_LOGO_WHITE_URL": "",
+        "MFE_LOGO_TRADEMARK_URL": "",
         # Repos
         "MFE_PLATFORM_REPO": None,
         "THEME_REPOS": None,
-
         # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
         "HIDE_DASHBOARD_SIDEBAR": False,
         "HIDE_LOOKING_FOR_CHALLENGE_WIDGET": False,
         "FIT_COURSE_IMAGE": True,
         "INDEX_ADDITIONAL_HTML": None,
         "CERTIFICATE_HTML": None,
-
         # static page templates
         "STATIC_TEMPLATE_404": None,
         "STATIC_TEMPLATE_429": None,
@@ -106,15 +99,19 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"BRANDING_{key}", value) for key, value in config["unique"].items()]
 )
 
-hooks.Filters.CONFIG_OVERRIDES.add_items(
-    list(config["overrides"].items())
-)
+hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 # Initialization tasks
 # To run the script from templates/panorama/tasks/myservice/init, add:
 with open(
-        str(importlib_resources.files("tutorbranding") / "templates" / "tasks" / "lms" / "init"),
-        encoding="utf-8",
+    str(
+        importlib_resources.files("tutorbranding")
+        / "templates"
+        / "tasks"
+        / "lms"
+        / "init"
+    ),
+    encoding="utf-8",
 ) as task_file:
     hooks.Filters.CLI_DO_INIT_TASKS.add_item(("lms", task_file.read()))
 
@@ -132,38 +129,44 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 )
 
 # Force the rendering of scss files, even though they are included in a "partials" directory
-hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(r"theme/lms/static/sass/partials/lms/theme/")
+hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(
+    r"theme/lms/static/sass/partials/lms/theme/"
+)
 
 
-# MFEs
-@MFE_APPS.add()
-def _add_my_mfe(mfes):
+@MFE_APPS.add()  # type: ignore[untyped-decorator]
+def _add_my_mfe(mfes: dict[str, Any]) -> dict[str, Any]:
     current_context = click.get_current_context()
-    root = current_context.params.get('root')
+    root = current_context.params.get("root")
     if root:
         configuration = tutor_config.load(root)
-        for mfe_name, mfe_config in configuration['BRANDING_MFE'].items():
+        branding_mfe = cast(dict[str, dict[str, Any]], configuration["BRANDING_MFE"])
+        for mfe_name, mfe_config in branding_mfe.items():
             # Check for custom MFE port
             if mfe_name not in mfes:
-                if 'repository' not in mfe_config:
+                if "repository" not in mfe_config:
                     raise click.ClickException(
                         f"Custom MFE {mfe_name} must have a repository"
                     )
-                if 'port' not in mfe_config:
+                if "port" not in mfe_config:
                     raise click.ClickException(
                         f"Custom MFE {mfe_name} must have a port"
                     )
-                if not mfe_config['repository'].endswith('.git'):
+                if not mfe_config["repository"].endswith(".git"):
                     raise click.ClickException(
                         f"Custom MFE {mfe_name} repository must end with .git"
                     )
                 for base_mfe_name, base_mfe_config in mfes.items():
-                    if base_mfe_config['port'] == mfe_config['port']:
+                    if base_mfe_config["port"] == mfe_config["port"]:
                         raise click.ClickException(
                             f"Custom MFE {mfe_name} port {mfe_config['port']} "
                             f"already taken by {base_mfe_name}"
                         )
-                fmt.echo_alert(f"Adding custom MFE {mfe_name} with repository {mfe_config['repository']} and port {mfe_config['port']}")
+                fmt.echo_alert(
+                    "Adding custom MFE "
+                    f"{mfe_name} with repository {mfe_config['repository']} "
+                    f"and port {mfe_config['port']}"
+                )
                 mfes[mfe_name] = mfe_config
             else:
                 mfes[mfe_name].update(mfe_config)
