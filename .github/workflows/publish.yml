@@ -10,6 +10,7 @@ jobs:
   release-eligibility:
     name: Check release eligibility
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     outputs:
       on_main: ${{ steps.check.outputs.on_main }}
 
