@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 21.0.0 (2026-04-22)
 - feat: target Open edX Ulmo with Tutor 21.x
 - feat: switch the bundled MFE brand package to the current `@openedx/brand-openedx` structure
 - feat: generate Paragon design-token assets during the MFE build while keeping a thin SCSS compatibility layer
