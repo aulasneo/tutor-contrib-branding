@@ -19,9 +19,18 @@ classifiers = [
 ]
 dependencies = [
   "tutor>=21.0.0,<22.0.0",
-  "tutor-mfe>=21.0.0,<22.0.0"yes
+  "tutor-mfe>=21.0.0,<22.0.0",
 ]
 dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "build",
+  "black",
+  "mypy",
+  "pylint",
+  "twine>=6.2.0",
+]
 
 [project.urls]
 Code = "https://github.com/aulasneo/tutor-contrib-branding"
