@@ -6,7 +6,7 @@ authors = [
 ]
 license = { text = "AGPLv3" }
 license-files = []
-readme = { file = "README.rst", content-type = "text/x-rst" }
+readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -18,9 +18,19 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-  "tutor>=20.0.0,<21.0.0",
+  "tutor>=21.0.0,<22.0.0",
+  "tutor-mfe>=21.0.0,<22.0.0",
 ]
 dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "build",
+  "black",
+  "mypy",
+  "pylint",
+  "twine>=6.2.0",
+]
 
 [project.urls]
 Code = "https://github.com/aulasneo/tutor-contrib-branding"
@@ -41,5 +51,5 @@ packages = ["tutorbranding"]
 
 [tool.hatch.build.targets.sdist]
 strict-naming = false
-include = ["/tutorbranding", "/README.rst", "/LICENSE.txt", "/CHANGELOG.md"]
+include = ["/tutorbranding", "/README.md", "/LICENSE.txt", "/CHANGELOG.md"]
 exclude = ["tests*"]

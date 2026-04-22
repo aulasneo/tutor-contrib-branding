@@ -1,0 +1,165 @@
+{% raw %}
+// tutor-contrib-branding plugin: begin buildtime definitions
+const SELECTED_THEME_VARIANT_STORAGE_KEY = 'selected-paragon-theme-variant';
+
+function formatThemeVariantLabel(themeVariant) {
+  return themeVariant
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function getAutomaticThemeVariant(paragonThemeUrls) {
+  const themeVariants = paragonThemeUrls?.variants || {};
+  const themeVariantDefaults = paragonThemeUrls?.defaults || {};
+  const themeVariantKeys = Object.keys(themeVariants);
+
+  if (themeVariantKeys.length === 1) {
+    return themeVariantKeys[0];
+  }
+
+  const prefersDarkMode = !!window.matchMedia?.('(prefers-color-scheme: dark)')?.matches;
+  if (prefersDarkMode && themeVariantDefaults.dark && themeVariants[themeVariantDefaults.dark]) {
+    return themeVariantDefaults.dark;
+  }
+
+  if (themeVariantDefaults.light && themeVariants[themeVariantDefaults.light]) {
+    return themeVariantDefaults.light;
+  }
+
+  return themeVariantKeys[0];
+}
+
+function getThemeVariantOptions(paragonThemeUrls) {
+  const themeVariants = paragonThemeUrls?.variants || {};
+  const themeVariantDefaults = paragonThemeUrls?.defaults || {};
+  const themeVariantKeys = Object.keys(themeVariants);
+
+  if (themeVariantKeys.length <= 1) {
+    return [];
+  }
+
+  const options = [{ value: 'auto', label: 'Auto' }];
+  const seenThemeVariants = new Set();
+
+  if (themeVariantDefaults.light && themeVariants[themeVariantDefaults.light]) {
+    options.push({ value: themeVariantDefaults.light, label: 'Light' });
+    seenThemeVariants.add(themeVariantDefaults.light);
+  }
+
+  if (
+    themeVariantDefaults.dark &&
+    themeVariants[themeVariantDefaults.dark] &&
+    themeVariantDefaults.dark !== themeVariantDefaults.light
+  ) {
+    options.push({ value: themeVariantDefaults.dark, label: 'Dark' });
+    seenThemeVariants.add(themeVariantDefaults.dark);
+  }
+
+  themeVariantKeys
+    .filter((themeVariant) => !seenThemeVariants.has(themeVariant))
+    .sort()
+    .forEach((themeVariant) => {
+      options.push({
+        value: themeVariant,
+        label: formatThemeVariantLabel(themeVariant),
+      });
+    });
+
+  return options;
+}
+
+function ThemeSelectorFooterWidget() {
+  const { config, paragonTheme } = useContext(AppContext);
+  const paragonThemeUrls = config?.PARAGON_THEME_URLS;
+  const themeVariantOptions = getThemeVariantOptions(paragonThemeUrls);
+
+  if (!paragonThemeUrls || themeVariantOptions.length === 0) {
+    return null;
+  }
+
+  const storedThemeVariant = window.localStorage.getItem(SELECTED_THEME_VARIANT_STORAGE_KEY);
+  const validOptionValues = new Set(themeVariantOptions.map(({ value }) => value));
+  const selectedThemeVariant = (
+    storedThemeVariant && validOptionValues.has(storedThemeVariant)
+  ) ? storedThemeVariant : 'auto';
+
+  const onThemeVariantChange = (event) => {
+    const nextThemeVariant = event.target.value;
+
+    if (nextThemeVariant === 'auto') {
+      window.localStorage.removeItem(SELECTED_THEME_VARIANT_STORAGE_KEY);
+
+      const automaticThemeVariant = getAutomaticThemeVariant(paragonThemeUrls);
+      if (automaticThemeVariant && automaticThemeVariant !== paragonTheme?.state?.themeVariant) {
+        window.location.reload();
+      }
+      return;
+    }
+
+    paragonTheme.setThemeVariant(nextThemeVariant);
+  };
+
+  return (
+    <div
+      style={{
+        alignItems: 'center',
+        display: 'flex',
+        gap: '0.5rem',
+        justifyContent: 'center',
+        marginTop: '1rem',
+        width: '100%',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      <label
+        htmlFor="tutor-branding-theme-selector"
+        style={{
+          color: 'var(--pgn-color-text-base, inherit)',
+          fontSize: '0.875rem',
+          marginBottom: 0,
+        }}
+      >
+        Theme
+      </label>
+      <select
+        id="tutor-branding-theme-selector"
+        aria-label="Theme selector"
+        onChange={onThemeVariantChange}
+        style={{
+          backgroundColor: 'var(--pgn-color-light-100, #ffffff)',
+          border: '1px solid var(--pgn-color-light-500, #c8c8c8)',
+          borderRadius: '999px',
+          color: 'var(--pgn-color-text-base, inherit)',
+          fontSize: '0.875rem',
+          padding: '0.25rem 0.75rem',
+        }}
+        value={selectedThemeVariant}
+      >
+        {themeVariantOptions.map(({ value, label }) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function BrandingOverlayHtmlWidget() {
+  const { config } = useContext(AppContext);
+  const overlayHtml = config?.BRANDING_OVERLAY_HTML;
+
+  if (!overlayHtml) {
+    return null;
+  }
+
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: overlayHtml,
+      }}
+    />
+  );
+}
+// tutor-contrib-branding plugin: end buildtime definitions
+{% endraw %}
