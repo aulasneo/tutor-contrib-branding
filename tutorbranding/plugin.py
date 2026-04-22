@@ -1,12 +1,13 @@
 import os
 from glob import glob
+from textwrap import dedent
 from typing import Any, cast
 
 import click
 import importlib_resources
 from tutor import config as tutor_config
 from tutor import fmt, hooks
-from tutormfe.hooks import MFE_APPS
+from tutormfe.hooks import MFE_APPS, PLUGIN_SLOTS
 
 from .__about__ import __version__
 
@@ -15,77 +16,16 @@ config: dict[str, dict[str, Any]] = {
     # Add here your new settings
     "defaults": {
         "VERSION": __version__,
-        "WELCOME_MESSAGE": "Welcome to Open edX®",
-        # Footer links are dictionaries with a "title" and "url"
-        # To remove all links, run:
-        # tutor config save --set BRANDING_FOOTER_NAV_LINKS=[] --set BRANDING_FOOTER_LEGAL_LINKS=[]
-        "FOOTER_NAV_LINKS": [
-            {"title": "About", "url": "/about"},
-            {"title": "Contact", "url": "/contact"},
-        ],
-        "FOOTER_LEGAL_LINKS": [
-            {"title": "Terms of service", "url": "/tos"},
-        ],
-        "BACKGROUND": "#ffffff",
-        "BG_PRIMARY": "#ffffff",
-        "BODY": "#FFFFFF",
-        "PRIMARY": "#0000FF",
-        "SECONDARY": "#454545",
-        "FONT_FAMILY": "",
-        "BRAND": "#9D0054",
-        "SUCCESS": "#178253",
-        "INFO": "#006DAA",
-        "DANGER": "#C32D3A",
-        "WARNING": "#FFD900",
-        "LIGHT": "#E1DDDB",
-        "DARK": "#273F2F",
-        "ACCENT_A": "#00BBF9",
-        "ACCENT_B": "#FFEE88",
-        "HOMEPAGE_BG_IMAGE": "",
-        # EXTRAS: additional CSS for html theme
-        "EXTRAS": "",
-        # OVERRIDES: additional CSS for mfe branding
-        "OVERRIDES": "",
-        "FONTS": "",
-        "LMS_IMAGES": [],
-        "CMS_IMAGES": [],
-        "FONTS_URLS": [],
+        "PARAGON_THEME_URLS": {},
+        "DISABLE_THEME_SWITCH": False,
         "MFE": {},
-        "FRONTEND_COMPONENT_HEADER_REPO": None,
-        "FRONTEND_COMPONENT_FOOTER_REPO": None,
         "MFE_LOGO_URL": "",
         "MFE_LOGO_WHITE_URL": "",
         "MFE_LOGO_TRADEMARK_URL": "",
+        "MFE_FAVICON_URL": "",
+        "OVERLAY_HTML": None,
         # Repos
-        "MFE_PLATFORM_REPO": None,
         "THEME_REPOS": None,
-        # Customizations of the learner dashboard in Quince. May not apply if the MFE is redesigned.
-        "HIDE_DASHBOARD_SIDEBAR": False,
-        "HIDE_LOOKING_FOR_CHALLENGE_WIDGET": False,
-        "FIT_COURSE_IMAGE": True,
-        "INDEX_ADDITIONAL_HTML": None,
-        "CERTIFICATE_HTML": None,
-        # static page templates
-        "STATIC_TEMPLATE_404": None,
-        "STATIC_TEMPLATE_429": None,
-        "STATIC_TEMPLATE_ABOUT": None,
-        "STATIC_TEMPLATE_BLOG": None,
-        "STATIC_TEMPLATE_CONTACT": None,
-        "STATIC_TEMPLATE_DONATE": None,
-        "STATIC_TEMPLATE_EMBARGO": None,
-        "STATIC_TEMPLATE_FAQ": None,
-        "STATIC_TEMPLATE_HELP": None,
-        "STATIC_TEMPLATE_HONOR": None,
-        "STATIC_TEMPLATE_JOBS": None,
-        "STATIC_TEMPLATE_MEDIA_KIT": None,
-        "STATIC_TEMPLATE_NEWS": None,
-        "STATIC_TEMPLATE_PRESS": None,
-        "STATIC_TEMPLATE_PRIVACY": None,
-        "STATIC_TEMPLATE_SERVER_DOWN": None,
-        "STATIC_TEMPLATE_SERVER_ERROR": None,
-        "STATIC_TEMPLATE_SERVER_OVERLOADED": None,
-        "STATIC_TEMPLATE_SITEMAP": None,
-        "STATIC_TEMPLATE_TOS": None,
     },
     "unique": {},
     "overrides": {},
@@ -124,7 +64,6 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
         ("theme", "build/openedx/themes"),
         ("brand-openedx", "plugins/mfe/build/mfe"),
-        ("brand-openedx-learner-dashboard", "plugins/mfe/build/mfe"),
     ],
 )
 
@@ -133,9 +72,114 @@ hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(
     r"theme/lms/static/sass/partials/lms/theme/"
 )
 
+# Enable the catalog microfrontend and set its URL in settings
+# Remove after Ulmo release, when the catalog MFE will be enabled by default
+hooks.Filters.ENV_PATCHES.add_items(
+    [
+        (
+            "openedx-common-settings",
+            'CATALOG_MICROFRONTEND_URL = "http://{{ MFE_HOST }}/catalog"',
+        ),
+        (
+            "openedx-development-settings",
+            "CATALOG_MICROFRONTEND_URL = \"http://{{ MFE_HOST }}:{{ get_mfe('catalog').port }}/catalog\"",
+        ),
+        (
+            "openedx-lms-common-settings",
+            "ENABLE_CATALOG_MICROFRONTEND = True",
+        ),
+    ]
+)
+
+
+def _theme_switch_disabled() -> bool:
+    current_context = click.get_current_context(silent=True)
+    if current_context is None:
+        return False
+
+    root = current_context.params.get("root")
+    if not root:
+        return False
+
+    configuration = tutor_config.load(root)
+    return bool(configuration.get("BRANDING_DISABLE_THEME_SWITCH", False))
+
+
+def _overlay_html_defined() -> bool:
+    current_context = click.get_current_context(silent=True)
+    if current_context is None:
+        return False
+
+    root = current_context.params.get("root")
+    if not root:
+        return False
+
+    configuration = tutor_config.load(root)
+    return bool(configuration.get("BRANDING_OVERLAY_HTML"))
+
+
+if not _theme_switch_disabled():
+    PLUGIN_SLOTS.add_item(
+        (
+            "all",
+            "footer_slot",
+            dedent("""
+                {
+                  op: PLUGIN_OPERATIONS.Insert,
+                  widget: {
+                    id: 'branding_theme_selector',
+                    type: DIRECT_PLUGIN,
+                    priority: 80,
+                    RenderWidget: ThemeSelectorFooterWidget,
+                  },
+                }
+                """).strip(),
+        )
+    )
+
+if _overlay_html_defined():
+    PLUGIN_SLOTS.add_item(
+        (
+            "catalog",
+            "org.openedx.frontend.catalog.home_page.overlay_html",
+            dedent("""
+                {
+                  op: PLUGIN_OPERATIONS.Hide,
+                  widgetId: 'default_contents',
+                }
+                """).strip(),
+        )
+    )
+    PLUGIN_SLOTS.add_item(
+        (
+            "catalog",
+            "org.openedx.frontend.catalog.home_page.overlay_html",
+            dedent("""
+                {
+                  op: PLUGIN_OPERATIONS.Insert,
+                  widget: {
+                    id: 'branding_overlay_html',
+                    type: DIRECT_PLUGIN,
+                    RenderWidget: BrandingOverlayHtmlWidget,
+                  },
+                }
+                """).strip(),
+        )
+    )
+
 
 @MFE_APPS.add()  # type: ignore[untyped-decorator]
 def _add_my_mfe(mfes: dict[str, Any]) -> dict[str, Any]:
+    # Enable the catalog microfrontend and set its URL in settings
+    # Remove after Ulmo release, when the catalog MFE will be enabled by default
+    mfes.setdefault(
+        "catalog",
+        {
+            "repository": "https://github.com/openedx/frontend-app-catalog.git",
+            "port": 1998,
+            "version": "master",
+        },
+    )
     current_context = click.get_current_context()
     root = current_context.params.get("root")
     if root:

@@ -1,5 +1,14 @@
 # Change log
 
+## Unreleased
+- feat: target Open edX Ulmo with Tutor 21.x
+- feat: switch the bundled MFE brand package to the current `@openedx/brand-openedx` structure
+- feat: generate Paragon design-token assets during the MFE build while keeping a thin SCSS compatibility layer
+- breaking: remove legacy build-time branding settings for colors, fonts, CSS overrides, homepage assets, LMS/CMS asset downloads, learner-dashboard tweaks, and homepage HTML injection; use `BRANDING_PARAGON_THEME_URLS` with externally published design-token themes instead
+- breaking: remove header/footer/frontend-platform repository override settings in favor of the new MFE extension model
+- ref: collapse learner-dashboard-specific branding into the shared brand package overrides
+- doc: rewrite the branding guidance around design tokens for Ulmo
+
 ## Version 20.0.1 (2026-03-26)
 - feat: add local development automation with a `Makefile` and pinned dev requirements
 - feat: add GitHub Actions test and release workflows aligned with the current plugin maintenance flow

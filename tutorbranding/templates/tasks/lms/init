@@ -1,4 +1,5 @@
 ./manage.py lms shell -c "
+{% if BRANDING_THEME_REPOS %}
 import sys
 from django.contrib.sites.models import Site
 def assign_theme(name, domain):
@@ -25,9 +26,8 @@ domain_names = [
     '{{ PREVIEW_LMS_HOST }}:8000',
 ]
 for domain_name in domain_names:
-{% if BRANDING_THEME_REPOS %}
     assign_theme('{{ BRANDING_THEME_REPOS[0]['name'] }}', domain_name)
 {% else %}
-    assign_theme('theme', domain_name)
+print('No themes configured, skipping theme assignment.')
 {% endif %}
 "

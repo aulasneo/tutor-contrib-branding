@@ -1,0 +1,4 @@
+// tutor-contrib-branding plugin: begin buildtime imports
+import { useContext } from 'react';
+import { AppContext } from '@edx/frontend-platform/react';
+// tutor-contrib-branding plugin: end buildtime imports
