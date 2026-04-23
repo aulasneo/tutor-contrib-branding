@@ -61,17 +61,6 @@ hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(
     str(importlib_resources.files("tutorbranding") / "templates")
 )
 
-hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
-    [
-        ("theme", "build/openedx/themes"),
-        ("brand-openedx", "plugins/mfe/build/mfe"),
-    ],
-)
-
-# Force the rendering of scss files, even though they are included in a "partials" directory
-hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(
-    r"theme/lms/static/sass/partials/lms/theme/"
-)
 
 def _theme_switch_disabled() -> bool:
     current_context = click.get_current_context(silent=True)

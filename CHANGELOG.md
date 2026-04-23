@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- feat: Allow disabling catalog mfe with BRANDING_ENABLE_CATALOG_MICROFRONTEND (True by default).
+- feat: allow disabling catalog mfe with BRANDING_ENABLE_CATALOG_MICROFRONTEND (True by default).
+- chore: remove deprecated template targets
 
 ## Version 21.0.0 (2026-04-22)
 - feat: target Open edX Ulmo with Tutor 21.x
