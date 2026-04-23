@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- feat: Allow disabling catalog mfe with BRANDING_ENABLE_CATALOG_MICROFRONTEND (True by default).
+
 ## Version 21.0.0 (2026-04-22)
 - feat: target Open edX Ulmo with Tutor 21.x
 - feat: switch the bundled MFE brand package to the current `@openedx/brand-openedx` structure

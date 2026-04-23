@@ -91,6 +91,12 @@ These values must be public URLs.
 
 This value is passed through the `org.openedx.frontend.catalog.home_page.overlay_html` plugin slot and is only applied when the setting is set.
 
+## Catalog MFE and marketing site
+
+By default, this plugin enables the catalog MFE, which replaces the home and the courses pages.
+If you have set marketing site, set BRANDING_ENABLE_CATALOG_MICROFRONTEND to False in order to redirect the home and courses pages
+to your marketing site URL instead.
+
 ## Theme repositories and comprehensive theming
 
 `BRANDING_THEME_REPOS` is still supported, but only for the remaining legacy/comprehensive theme surface.

@@ -1,0 +1,3 @@
+# tutor-contrib-branding plugin patch
+CATALOG_MICROFRONTEND_URL = "http{% if ENABLE_HTTPS %}s{% endif %}://{{ MFE_HOST }}/catalog"
+# end of tutor-contrib-branding plugin patch

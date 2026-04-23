@@ -24,6 +24,7 @@ config: dict[str, dict[str, Any]] = {
         "MFE_LOGO_TRADEMARK_URL": "",
         "MFE_FAVICON_URL": "",
         "OVERLAY_HTML": None,
+        "ENABLE_CATALOG_MICROFRONTEND": True,
         # Repos
         "THEME_REPOS": None,
     },
@@ -71,26 +72,6 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_item(
     r"theme/lms/static/sass/partials/lms/theme/"
 )
-
-# Enable the catalog microfrontend and set its URL in settings
-# Remove after Ulmo release, when the catalog MFE will be enabled by default
-hooks.Filters.ENV_PATCHES.add_items(
-    [
-        (
-            "openedx-common-settings",
-            'CATALOG_MICROFRONTEND_URL = "http://{{ MFE_HOST }}/catalog"',
-        ),
-        (
-            "openedx-development-settings",
-            "CATALOG_MICROFRONTEND_URL = \"http://{{ MFE_HOST }}:{{ get_mfe('catalog').port }}/catalog\"",
-        ),
-        (
-            "openedx-lms-common-settings",
-            "ENABLE_CATALOG_MICROFRONTEND = True",
-        ),
-    ]
-)
-
 
 def _theme_switch_disabled() -> bool:
     current_context = click.get_current_context(silent=True)

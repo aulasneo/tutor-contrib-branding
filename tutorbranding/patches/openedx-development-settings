@@ -1,0 +1,3 @@
+# tutor-contrib-branding plugin patch
+CATALOG_MICROFRONTEND_URL = "http://{{ MFE_HOST }}:{{ get_mfe('catalog').port }}/catalog"
+# end of tutor-contrib-branding plugin patch
