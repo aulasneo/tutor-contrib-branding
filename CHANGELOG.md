@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- feat: Use catalog MFE in version ulmo.4
+
 ## Version 21.1.0 (2026-04-23)
 
 - feat: allow disabling catalog mfe with BRANDING_ENABLE_CATALOG_MICROFRONTEND (True by default).

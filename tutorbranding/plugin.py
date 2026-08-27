@@ -147,7 +147,7 @@ def _add_my_mfe(mfes: dict[str, Any]) -> dict[str, Any]:
         {
             "repository": "https://github.com/openedx/frontend-app-catalog.git",
             "port": 1998,
-            "version": "master",
+            "version": "release/ulmo.4",
         },
     )
     current_context = click.get_current_context()
