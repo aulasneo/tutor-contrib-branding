@@ -1,0 +1,18 @@
+CHANGELOG.md
+  h_67430f944e00e2 3-5
+pyproject.toml
+  h_67430f944e00e2 32
+tutorbranding/plugin.py
+  h_67430f944e00e2 150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "599252bbbb35b8e9382d55834401374d57d560a1",
+  "prompts": {},
+  "humans": {
+    "h_67430f944e00e2": {
+      "author": "Andrés González <andres@aulasneo.com>"
+    }
+  }
+}
