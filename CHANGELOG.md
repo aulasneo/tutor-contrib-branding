@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 21.2.0 (2026-08-27)
 - feat: Use catalog MFE in version ulmo.4
 
 ## Version 21.1.0 (2026-04-23)
