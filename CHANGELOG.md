@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 22.0.0 (2026-09-25)
 
 - feat: target Open edX Verawood with Tutor and Tutor MFE 22.x
 - feat: support Python 3.10 through 3.14 and test the full range in CI
