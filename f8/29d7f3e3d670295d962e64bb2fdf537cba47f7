@@ -1,0 +1,50 @@
+CHANGELOG.md
+  s_ddf79c747aa9ea::t_2edd849acb2170 4-10
+  s_ddf79c747aa9ea::t_7eb1e9a94615bf 3
+  s_ddf79c747aa9ea::t_0eae348a37787e 11
+tutorbranding/patches/openedx-lms-production-settings
+  s_ddf79c747aa9ea::t_fe2d717add13a8 1-3
+tutorbranding/patches/mfe-env-config-buildtime-definitions
+  s_fc06a46b08c17a::t_849fe8d335380b 74-76,151-152
+.github/workflows/publish.yml
+  s_ddf79c747aa9ea::t_ca273ab1e059a6 48
+pyproject.toml
+  s_ddf79c747aa9ea::t_ca273ab1e059a6 10
+  s_ddf79c747aa9ea::t_87a1810b1fa3ab 17,20-21,24-25
+tutorbranding/patches/mfe-lms-common-settings
+  s_ddf79c747aa9ea::t_bb6ea596415ae9 2-31
+tutorbranding/patches/mfe-env-config-buildtime-imports
+  s_fc06a46b08c17a::t_849fe8d335380b 2-7
+README.md
+  s_fc06a46b08c17a::t_5a3cc2a57d45b2 5-10
+tutorbranding/patches/openedx-lms-development-settings
+  s_ddf79c747aa9ea::t_fe2d717add13a8 3
+.github/workflows/test.yml
+  s_ddf79c747aa9ea::t_ca273ab1e059a6 16
+tutorbranding/plugin.py
+  s_ddf79c747aa9ea::t_d75bb0690f9ceb 10,92-95,107-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f829d7f3e3d670295d962e64bb2fdf537cba47f7",
+  "prompts": {},
+  "sessions": {
+    "s_ddf79c747aa9ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06d2f-2616-7f72-832c-06188fa93c00",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Andrés González <andres@aulasneo.com>"
+    },
+    "s_fc06a46b08c17a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a081aa-1820-7423-ace8-95212956e242",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Andrés González <andres@aulasneo.com>"
+    }
+  }
+}
