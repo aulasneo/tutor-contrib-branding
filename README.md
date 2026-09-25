@@ -2,6 +2,12 @@
 
 This plugin customizes Open edX branding for Tutor, with a focus on Ulmo-era MFE theming.
 
+Tutor 22 compatibility rendering uses frontend-base `SiteContext` for the theme
+selector; standalone MFEs retain frontend-platform `AppContext`. Imports are
+branding-specific aliases so combined plugin patches do not collide. The generated
+frontend-base site was built with Panorama and this unpublished checkout on
+2026-09-08; browser theme-switching remains a staging check.
+
 ## Installation
 
 ```bash

@@ -7,7 +7,7 @@ import click
 import importlib_resources
 from tutor import config as tutor_config
 from tutor import fmt, hooks
-from tutormfe.hooks import MFE_APPS, PLUGIN_SLOTS
+from tutormfe.hooks import FRONTEND_COMPAT_SLOTS, MFE_APPS, PLUGIN_SLOTS
 
 from .__about__ import __version__
 
@@ -89,11 +89,10 @@ def _overlay_html_defined() -> bool:
 
 
 if not _theme_switch_disabled():
-    PLUGIN_SLOTS.add_item(
-        (
-            "all",
-            "footer_slot",
-            dedent("""
+    theme_selector_slot = (
+        "all",
+        "footer_slot",
+        dedent("""
                 {
                   op: PLUGIN_OPERATIONS.Insert,
                   widget: {
@@ -104,8 +103,9 @@ if not _theme_switch_disabled():
                   },
                 }
                 """).strip(),
-        )
     )
+    PLUGIN_SLOTS.add_item(theme_selector_slot)
+    FRONTEND_COMPAT_SLOTS.add_item(theme_selector_slot)
 
 if _overlay_html_defined():
     PLUGIN_SLOTS.add_item(
@@ -140,16 +140,6 @@ if _overlay_html_defined():
 
 @MFE_APPS.add()  # type: ignore[untyped-decorator]
 def _add_my_mfe(mfes: dict[str, Any]) -> dict[str, Any]:
-    # Enable the catalog microfrontend and set its URL in settings
-    # Remove after Ulmo release, when the catalog MFE will be enabled by default
-    mfes.setdefault(
-        "catalog",
-        {
-            "repository": "https://github.com/openedx/frontend-app-catalog.git",
-            "port": 1998,
-            "version": "release/ulmo.4",
-        },
-    )
     current_context = click.get_current_context()
     root = current_context.params.get("root")
     if root:

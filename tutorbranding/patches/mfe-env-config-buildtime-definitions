@@ -71,7 +71,9 @@ function getThemeVariantOptions(paragonThemeUrls) {
 }
 
 function ThemeSelectorFooterWidget() {
-  const { config, paragonTheme } = useContext(AppContext);
+  const context = brandingUseContext(BrandingContext);
+  const config = context.config || { PARAGON_THEME_URLS: context.siteConfig?.theme };
+  const paragonTheme = context.paragonTheme || context.theme;
   const paragonThemeUrls = config?.PARAGON_THEME_URLS;
   const themeVariantOptions = getThemeVariantOptions(paragonThemeUrls);
 
@@ -146,7 +148,8 @@ function ThemeSelectorFooterWidget() {
 }
 
 function BrandingOverlayHtmlWidget() {
-  const { config } = useContext(AppContext);
+  const context = brandingUseContext(BrandingContext);
+  const config = context.config || context.siteConfig?.commonAppConfig;
   const overlayHtml = config?.BRANDING_OVERLAY_HTML;
 
   if (!overlayHtml) {

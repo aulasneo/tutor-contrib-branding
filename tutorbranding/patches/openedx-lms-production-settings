@@ -1,0 +1,3 @@
+# tutor-contrib-branding plugin patch
+ENABLE_CATALOG_MICROFRONTEND = {{ BRANDING_ENABLE_CATALOG_MICROFRONTEND }}
+# end of tutor-contrib-branding plugin patch

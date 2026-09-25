@@ -1,5 +1,14 @@
 # Change log
 
+## Unreleased
+
+- feat: target Open edX Verawood with Tutor and Tutor MFE 22.x
+- feat: support Python 3.10 through 3.14 and test the full range in CI
+- feat: configure Paragon themes for frontend-base apps while preserving legacy MFE support for both `url` and `urls.brandOverride` formats
+- fix: expose the footer theme selector to frontend-base apps through the Tutor MFE compatibility layer
+- fix: preserve the `BRANDING_ENABLE_CATALOG_MICROFRONTEND` opt-out in LMS development and production settings
+- ref: rely on Tutor MFE's built-in catalog registration and URLs instead of maintaining duplicate catalog patches
+
 ## Version 21.2.0 (2026-08-27)
 - feat: Use catalog MFE in version ulmo.4
 

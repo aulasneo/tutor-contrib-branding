@@ -1,5 +1,34 @@
 {% if BRANDING_OVERLAY_HTML %}MFE_CONFIG["BRANDING_OVERLAY_HTML"] = {{ BRANDING_OVERLAY_HTML | tojson }}{% endif %}
-{% if BRANDING_PARAGON_THEME_URLS %}MFE_CONFIG["PARAGON_THEME_URLS"] = {{ BRANDING_PARAGON_THEME_URLS | tojson }}{% endif %}
+{% if BRANDING_PARAGON_THEME_URLS %}
+MFE_CONFIG["PARAGON_THEME_URLS"] = {{ BRANDING_PARAGON_THEME_URLS | tojson }}
+
+# frontend-base uses FRONTEND_SITE_CONFIG["theme"] instead of PARAGON_THEME_URLS.
+# Normalize both the documented `url` form and the legacy `urls.brandOverride` form.
+_branding_paragon_theme_urls = MFE_CONFIG["PARAGON_THEME_URLS"]
+_branding_frontend_theme = {
+    "defaults": _branding_paragon_theme_urls.get("defaults", {}),
+    "variants": {},
+}
+_branding_core_theme = _branding_paragon_theme_urls.get("core", {})
+_branding_core_url = _branding_core_theme.get("url") or _branding_core_theme.get(
+    "urls", {}
+).get("brandOverride")
+if _branding_core_url:
+    _branding_frontend_theme["core"] = {"url": _branding_core_url}
+
+for _branding_variant_name, _branding_variant_theme in _branding_paragon_theme_urls.get(
+    "variants", {}
+).items():
+    _branding_variant_url = _branding_variant_theme.get(
+        "url"
+    ) or _branding_variant_theme.get("urls", {}).get("brandOverride")
+    if _branding_variant_url:
+        _branding_frontend_theme["variants"][_branding_variant_name] = {
+            "url": _branding_variant_url,
+        }
+
+FRONTEND_SITE_CONFIG["theme"] = _branding_frontend_theme
+{% endif %}
 {% if BRANDING_MFE_LOGO_URL %}MFE_CONFIG["LOGO_URL"] = "{{ BRANDING_MFE_LOGO_URL }}"{% endif %}
 {% if BRANDING_MFE_LOGO_WHITE_URL %}MFE_CONFIG["LOGO_WHITE_URL"] = "{{ BRANDING_MFE_LOGO_WHITE_URL }}"{% endif %}
 {% if BRANDING_MFE_LOGO_TRADEMARK_URL %}MFE_CONFIG["LOGO_TRADEMARK_URL"] = "{{ BRANDING_MFE_LOGO_TRADEMARK_URL }}"{% endif %}

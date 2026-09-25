@@ -1,4 +1,8 @@
 // tutor-contrib-branding plugin: begin buildtime imports
-import { useContext } from 'react';
-import { AppContext } from '@edx/frontend-platform/react';
+import { useContext as brandingUseContext } from 'react';
+{% if current_mfe is defined %}
+import { SiteContext as BrandingContext } from '@openedx/frontend-base';
+{% else %}
+import { AppContext as BrandingContext } from '@edx/frontend-platform/react';
+{% endif %}
 // tutor-contrib-branding plugin: end buildtime imports
