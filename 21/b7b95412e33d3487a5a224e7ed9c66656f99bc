@@ -1,0 +1,23 @@
+tutorbranding/patches/mfe-env-config-buildtime-definitions
+  s_ddf79c747aa9ea::t_8699179ba4d380 78-83,90,98,100-103,108
+tutorbranding/patches/mfe-env-config-buildtime-imports
+  s_ddf79c747aa9ea::t_8699179ba4d380 2
+CHANGELOG.md
+  s_ddf79c747aa9ea::t_8699179ba4d380 3-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "21b7b95412e33d3487a5a224e7ed9c66656f99bc",
+  "prompts": {},
+  "sessions": {
+    "s_ddf79c747aa9ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06d2f-2616-7f72-832c-06188fa93c00",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Andrés González <andres@aulasneo.com>"
+    }
+  }
+}
