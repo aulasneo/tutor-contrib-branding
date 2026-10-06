@@ -1,5 +1,5 @@
 // tutor-contrib-branding plugin: begin buildtime imports
-import { useContext as brandingUseContext } from 'react';
+import { useContext as brandingUseContext, useState as brandingUseState } from 'react';
 {% if current_mfe is defined %}
 import { SiteContext as BrandingContext } from '@openedx/frontend-base';
 {% else %}
