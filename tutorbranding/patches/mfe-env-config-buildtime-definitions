@@ -1,6 +1,5 @@
 {% raw %}
 // tutor-contrib-branding plugin: begin buildtime definitions
-const SELECTED_THEME_VARIANT_STORAGE_KEY = 'selected-paragon-theme-variant';
 
 function formatThemeVariantLabel(themeVariant) {
   return themeVariant
@@ -76,31 +75,37 @@ function ThemeSelectorFooterWidget() {
   const paragonTheme = context.paragonTheme || context.theme;
   const paragonThemeUrls = config?.PARAGON_THEME_URLS;
   const themeVariantOptions = getThemeVariantOptions(paragonThemeUrls);
+  const storageKey = context.paragonTheme
+    ? 'selected-paragon-theme-variant'
+    : 'selected-theme-variant';
+  const [themePreference, setThemePreference] = brandingUseState(
+    () => window.localStorage.getItem(storageKey) || 'auto',
+  );
 
   if (!paragonThemeUrls || themeVariantOptions.length === 0) {
     return null;
   }
 
-  const storedThemeVariant = window.localStorage.getItem(SELECTED_THEME_VARIANT_STORAGE_KEY);
   const validOptionValues = new Set(themeVariantOptions.map(({ value }) => value));
-  const selectedThemeVariant = (
-    storedThemeVariant && validOptionValues.has(storedThemeVariant)
-  ) ? storedThemeVariant : 'auto';
+  const selectedThemeVariant = validOptionValues.has(themePreference) ? themePreference : 'auto';
 
   const onThemeVariantChange = (event) => {
     const nextThemeVariant = event.target.value;
 
     if (nextThemeVariant === 'auto') {
-      window.localStorage.removeItem(SELECTED_THEME_VARIANT_STORAGE_KEY);
-
       const automaticThemeVariant = getAutomaticThemeVariant(paragonThemeUrls);
       if (automaticThemeVariant && automaticThemeVariant !== paragonTheme?.state?.themeVariant) {
-        window.location.reload();
+        paragonTheme.setThemeVariant(automaticThemeVariant);
       }
+      // Both theme setters persist explicit choices. Clear after calling the setter
+      // so Auto continues to follow system preferences.
+      window.localStorage.removeItem(storageKey);
+      setThemePreference('auto');
       return;
     }
 
     paragonTheme.setThemeVariant(nextThemeVariant);
+    setThemePreference(nextThemeVariant);
   };
 
   return (

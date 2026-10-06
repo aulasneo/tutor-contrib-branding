@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- fix: keep the theme selector value and applied theme in sync on frontend-base apps, including switching back to Auto
+
 ## Version 22.0.0 (2026-09-25)
 
 - feat: target Open edX Verawood with Tutor and Tutor MFE 22.x
