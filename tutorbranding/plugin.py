@@ -25,7 +25,9 @@ config: dict[str, dict[str, Any]] = {
         "MFE_FAVICON_URL": "",
         "OVERLAY_HTML": None,
         "ENABLE_CATALOG_MICROFRONTEND": True,
-        # Repos
+        "THEME_REPO": None,
+        "THEME": None,
+        # Deprecated single-theme repositories
         "THEME_REPOS": None,
     },
     "unique": {},

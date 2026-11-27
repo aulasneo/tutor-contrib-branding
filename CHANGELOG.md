@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- feat: Refactor comprehensive theming repo structure.
+
 ## Version 22.0.1 (2026-10-06)
 
 - fix: keep the theme selector value and applied theme in sync on frontend-base apps, including switching back to Auto
