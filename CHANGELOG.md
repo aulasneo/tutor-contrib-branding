@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 22.1.0 (2026-11-27)
 
 - feat: Refactor comprehensive theming repo structure.
 
