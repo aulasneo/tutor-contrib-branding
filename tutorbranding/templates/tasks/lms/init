@@ -1,5 +1,6 @@
-./manage.py lms shell -c "
-{% if BRANDING_THEME_REPOS %}
+./manage.py lms shell -c "$(cat <<'PYTHON'
+{% set theme = BRANDING_THEME if BRANDING_THEME_REPO else (BRANDING_THEME_REPOS[0]['name'] if BRANDING_THEME_REPOS else none) %}
+{% if theme %}
 import sys
 from django.contrib.sites.models import Site
 def assign_theme(name, domain):
@@ -7,7 +8,7 @@ def assign_theme(name, domain):
     if len(domain) > 50:
             sys.stderr.write(
                 'Assigning a theme to a site with a long (> 50 characters) domain name.'
-                ' The displayed site name will be truncated to 50 characters.\\n'
+                ' The displayed site name will be truncated to 50 characters.\n'
             )
     site, _ = Site.objects.get_or_create(domain=domain)
     if not site.name:
@@ -26,8 +27,9 @@ domain_names = [
     '{{ PREVIEW_LMS_HOST }}:8000',
 ]
 for domain_name in domain_names:
-    assign_theme('{{ BRANDING_THEME_REPOS[0]['name'] }}', domain_name)
+    assign_theme({{ theme | tojson }}, domain_name)
 {% else %}
 print('No themes configured, skipping theme assignment.')
 {% endif %}
-"
+PYTHON
+)"

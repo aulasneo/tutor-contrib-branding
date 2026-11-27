@@ -1,4 +1,7 @@
-{% if BRANDING_THEME_REPOS %}
+{% if BRANDING_THEME_REPO %}
+# Each top-level theme directory becomes available under /openedx/themes.
+RUN git clone --depth=1 --branch '{{ BRANDING_THEME_REPO["version"] }}' -- '{{ BRANDING_THEME_REPO["url"] }}' /openedx/themes && rm -rf /openedx/themes/.git
+{% elif BRANDING_THEME_REPOS %}
 # Branding plugin: cloning the comprehensive theme repos
 RUN mkdir /openedx/themes
 {% for repo in BRANDING_THEME_REPOS %}

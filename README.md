@@ -42,7 +42,7 @@ The supported path is:
 - publish Paragon `core.css` and variant CSS files from your design-token theme
 - point MFEs at those assets with `BRANDING_PARAGON_THEME_URLS`
 - configure logos and favicon explicitly with `BRANDING_MFE_LOGO_URL`, `BRANDING_MFE_LOGO_WHITE_URL`, `BRANDING_MFE_LOGO_TRADEMARK_URL`, and `BRANDING_MFE_FAVICON_URL`
-- use `BRANDING_THEME_REPOS` only for comprehensive theme content that still belongs to legacy pages, mainly certificates and static pages
+- use `BRANDING_THEME_REPO` only for comprehensive theme content that still belongs to legacy pages, mainly certificates and static pages
 
 Official references:
 
@@ -105,7 +105,7 @@ to your marketing site URL instead.
 
 ## Theme repositories and comprehensive theming
 
-`BRANDING_THEME_REPOS` is still supported, but only for the remaining legacy/comprehensive theme surface.
+Use `BRANDING_THEME_REPO` for comprehensive themes on legacy pages.
 
 That means:
 
@@ -116,11 +116,22 @@ That means:
 Example:
 
 ```yaml
-BRANDING_THEME_REPOS:
-  - name: my-theme
-    url: https://github.com/myorg/my-theme.git
-    version: main
+BRANDING_THEME_REPO:
+  url: https://github.com/myorg/themes.git
+  version: main
+BRANDING_THEME: my-theme
 ```
+
+Set `version` to a branch or tag. Put each theme in its own top-level directory,
+for example `my-theme/lms/` and `my-theme/cms/`. The image includes all themes.
+Set `BRANDING_THEME` to the directory name to assign during initialization.
+Leaving it unset skips assignment.
+
+`BRANDING_THEME_REPOS` is deprecated. Existing lists still install each repository
+under its configured name and assign the first theme. To migrate, move each
+repository’s theme files under its named directory in the shared repository and
+set the two options above. When both repository settings are configured,
+`BRANDING_THEME_REPO` takes precedence.
 
 After updating the configuration:
 
@@ -220,9 +231,9 @@ tutor local do init --limit branding
 ```
 
 Notes: 
-- `tutor local do init --limit branding` is needed only if you are using `BRANDING_THEME_REPOS`.
+- `tutor local do init --limit branding` is needed only if you are using comprehensive themes.
 This command associates the comprehensive theme directory to the site for legacy HTML pages.
-- `tutor images build openedx` is needed only if you are using `BRANDING_THEME_REPOS`.
+- `tutor images build openedx` is needed only if you are using comprehensive themes.
 - `tutor images build mfe` is needed only if you want the theme variant (light/dark/auto/...) switch.
 
 For Kubernetes deployments, also push rebuilt images and restart the affected services.
